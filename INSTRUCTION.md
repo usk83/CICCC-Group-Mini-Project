@@ -1,5 +1,7 @@
 # Instruction - Group Mini Project
 
+👉 [Example Screenshots](#example-screenshots)
+
 We've seen how Inheritance allows you to extend classes and add more functionality to them. Sometimes you not only want to extend the functionality of a class, but also modify it slightly in the child class.
 
 For example, say you're building a Java chess game.
