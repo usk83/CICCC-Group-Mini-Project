@@ -225,3 +225,13 @@ Files to submit (list)
 - Position.java
 
 (This is just a guideline, you are allowed to modify the architecture of your chess game. Files you submit may differ from the above list.)
+
+<hr>
+
+# Example Screenshots
+
+<img width="431" alt="example_screenshot_01" src="https://user-images.githubusercontent.com/7421329/67985573-5b0ae000-fbe6-11e9-864b-b3e68646aded.png">
+<img width="804" alt="example_screenshot_02" src="https://user-images.githubusercontent.com/7421329/67985574-5ba37680-fbe6-11e9-8cf5-6d8150cc81ef.png">
+<img width="498" alt="example_screenshot_03" src="https://user-images.githubusercontent.com/7421329/67985576-5ba37680-fbe6-11e9-83c8-7d34cb81a67d.png">
+<img width="441" alt="example_screenshot_04" src="https://user-images.githubusercontent.com/7421329/67985577-5ba37680-fbe6-11e9-985b-b02b4e4155ab.png">
+<img width="529" alt="example_screenshot_05" src="https://user-images.githubusercontent.com/7421329/67985578-5ba37680-fbe6-11e9-8f50-9fca332f7a28.png">
