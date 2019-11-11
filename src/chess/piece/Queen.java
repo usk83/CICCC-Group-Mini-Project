@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Queen extends Piece {
-  private static final Map<Color, Character> symbols = new HashMap<>(){{
+  private static final Map<Color, Character> symbols = new HashMap<Color, Character>(){{
     put(Color.WHITE, '♕');
     put(Color.BLACK, '♛');
   }};
