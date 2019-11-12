@@ -32,7 +32,25 @@ public class Game {
         case RESIGN:
           isGameOnGoing = false;
           break;
+        case GO_MOVE:
+          int[] moveFromToInt = new int[4];
+          char promotionPiece;
+          int index = 0;
+          for (int i = 0; i < userInput.length(); i++) {
+            char c = userInput.charAt(i);
+            moveFromToInt[index] = Character.isDigit(c) ? Character.getNumericValue(c) : convertLetterToNumber(c);
+            index++;
+          }
+
+          for (int i: moveFromToInt) {
+            System.out.println(i);
+          }
       }
     }
+  }
+
+  //  https://stackoverflow.com/questions/15027231/java-how-to-convert-letters-in-a-string-to-a-number
+  public int convertLetterToNumber (char c) {
+    return c - 'a';
   }
 }
