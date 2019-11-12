@@ -7,9 +7,9 @@ enum Command {
   HELP,
   BOARD,
   RESIGN,
-  ALLPOSSIBLEMOVES,
-  SQUAREPOSSIBLEMOVES,
-  GOMOVE,
+  ALL_POSSIBLE_MOVES,
+  SQUARE_POSSIBLE_MOVES,
+  GO_MOVE,
   INVALID;
 
   static Command parse(String str) {
@@ -21,17 +21,18 @@ enum Command {
       case "resign":
         return RESIGN;
       case "moves":
-        return ALLPOSSIBLEMOVES;
+        return ALL_POSSIBLE_MOVES;
       default:
         Pattern pattern = Pattern.compile("([a-z]+[0-9]+)(?<secondPos>[a-z]+[0-9]+([a-z]+)?)?");
         Matcher matcher = pattern.matcher(str);
         if (matcher.matches()) {
           if (matcher.group("secondPos") == null) {
-            return SQUAREPOSSIBLEMOVES;
+            return SQUARE_POSSIBLE_MOVES;
           } else {
-            return GOMOVE;
+            return GO_MOVE;
           }
         }
+
         return INVALID;
     }
   }
