@@ -24,7 +24,15 @@ public class Game {
         + " \\___)\\_)(_/(____)(____/(____/   \\___/\\_/\\_/\\_)(_/(____)(_)\n"
         + "\n");
     System.out.println(board);
-    String userInput = InputController.getUserInput("Enter UCI (type 'help' for help): ");
-    System.out.println(Command.parse(userInput));
+    boolean isGameOnGoing = true;
+    while (isGameOnGoing) {
+      String userInput = InputController.getUserInput("Enter UCI (type 'help' for help): ");
+      System.out.println(Command.parse(userInput));
+      switch (Command.parse(userInput)) {
+        case RESIGN:
+          isGameOnGoing = false;
+          break;
+      }
+    }
   }
 }
