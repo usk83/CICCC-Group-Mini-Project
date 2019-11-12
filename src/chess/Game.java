@@ -24,5 +24,7 @@ public class Game {
         + " \\___)\\_)(_/(____)(____/(____/   \\___/\\_/\\_/\\_)(_/(____)(_)\n"
         + "\n");
     System.out.println(board);
+    String userInput = InputController.getUserInput("Enter your option: ");
+    System.out.println(Command.parse(userInput));
   }
 }
