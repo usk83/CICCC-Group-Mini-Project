@@ -9,13 +9,13 @@ public class Pawn extends Piece {
     put(Color.BLACK, '♟');
   }};
 
-  public Pawn(Color color, int row, int col) {
-    super(color, symbols, row, col);
+  public Pawn(Color color) {
+    super(color, symbols);
   }
 
   @Override
   public boolean isValidMove(Position newPosition) {
-    if (!super.isValidMove(position)) {
+    if (!super.isValidMove(newPosition)) {
       return false;
     }
     // ToDo: implement

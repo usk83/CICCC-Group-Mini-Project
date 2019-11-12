@@ -9,20 +9,15 @@ public class Rook extends Piece {
     put(Color.BLACK, '♜');
   }};
 
-  public Rook(Color color, int row, int col) {
-    super(color, symbols, row, col);
+  public Rook(Color color) {
+    super(color, symbols);
   }
 
   @Override
   public boolean isValidMove(Position newPosition) {
-    if (!super.isValidMove(position)) {
+    if (!super.isValidMove(newPosition)) {
       return false;
     }
-    if (newPosition.getCol() == position.getCol()
-        && newPosition.getRow() == position.getRow()) {
-      return true;
-    } else {
       return false;
-    }
   }
 }

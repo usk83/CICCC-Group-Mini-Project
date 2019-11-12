@@ -9,13 +9,13 @@ public class Knight extends Piece {
     put(Color.BLACK, '♞');
   }};
 
-  public Knight(Color color, int row, int col) {
-    super(color, symbols, row, col);
+  public Knight(Color color) {
+    super(color, symbols);
   }
 
   @Override
   public boolean isValidMove(Position newPosition) {
-    if (!super.isValidMove(position)) {
+    if (!super.isValidMove(newPosition)) {
       return false;
     }
     // ToDo: implement

@@ -5,10 +5,9 @@ import java.util.Map;
 
 public abstract class Piece {
   protected Color color;
-  protected Position position;
   protected char symbol;
 
-  public Piece(Color color, Map<Color, Character> symbols, int row, int col) {
+  public Piece(Color color, Map<Color, Character> symbols) {
     if (color == null) {
       throw new IllegalArgumentException("`color` must be specified.");
     }
@@ -18,7 +17,6 @@ public abstract class Piece {
     }
 
     this.color = color;
-    position = new Position(row, col);
     symbol = s;
   }
 
@@ -29,14 +27,6 @@ public abstract class Piece {
     } else {
       return false;
     }
-  }
-
-  public Position getPosition() {
-    return position;
-  }
-
-  public void setPosition(Position position) {
-    this.position = position;
   }
 
   public void printClassName() {

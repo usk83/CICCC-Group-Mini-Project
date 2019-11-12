@@ -10,20 +10,15 @@ public class Bishop extends Piece {
     put(Color.BLACK, '♝');
   }};
 
-  public Bishop(Color color, int row, int col) {
-    super(color, symbols, row, col);
+  public Bishop(Color color) {
+    super(color, symbols);
   }
 
   @Override
   public boolean isValidMove(Position newPosition) {
-    if (!super.isValidMove(position)) {
+    if (!super.isValidMove(newPosition)) {
       return false;
     }
-    if (Math.abs(newPosition.getCol() - position.getCol())
-        == Math.abs(newPosition.getRow() - position.getRow())) {
-      return true;
-    } else {
-      return false;
-    }
+    return false;
   }
 }
