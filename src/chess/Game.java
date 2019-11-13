@@ -42,10 +42,6 @@ public class Game {
             index++;
           }
 
-          for (int i: moveTo) {
-            System.out.println(i);
-          }
-
           board.update(new Position(moveTo[0], moveTo[1]), new Position(moveTo[2], moveTo[3]));
 
       }
