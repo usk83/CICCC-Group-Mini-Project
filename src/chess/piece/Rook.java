@@ -18,6 +18,7 @@ public class Rook extends Piece {
     if (!super.isValidMove(newPosition)) {
       return false;
     }
-      return false;
+
+    return true;
   }
 }

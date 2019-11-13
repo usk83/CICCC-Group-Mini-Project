@@ -23,9 +23,9 @@ public class Game {
         + "( (__ ) __ ( ) _) \\___ \\\\___ \\  ( (_ \\/    \\/ \\/ \\ ) _) \\_/\n"
         + " \\___)\\_)(_/(____)(____/(____/   \\___/\\_/\\_/\\_)(_/(____)(_)\n"
         + "\n");
-    System.out.println(board);
     boolean isGameOnGoing = true;
     while (isGameOnGoing) {
+      System.out.println(board);
       String userInput = InputController.getUserInput("Enter UCI (type 'help' for help): ");
       System.out.println(Command.parse(userInput));
       switch (Command.parse(userInput)) {
@@ -41,20 +41,17 @@ public class Game {
             moveTo[index] = Character.isDigit(c) ? convertBoardNumber(c) : convertLetterToNumber(c);
             index++;
           }
-
           board.update(new Position(moveTo[0], moveTo[1]), new Position(moveTo[2], moveTo[3]));
-
       }
-      System.out.println(board);
     }
   }
 
   //  https://stackoverflow.com/questions/15027231/java-how-to-convert-letters-in-a-string-to-a-number
-  public int convertLetterToNumber (char c) {
+  private int convertLetterToNumber (char c) {
     return c - 'a';
   }
 
-  public int convertBoardNumber(int i) {
+  private int convertBoardNumber(int i) {
     return Math.abs(Character.getNumericValue(i) - 8);
   }
 }

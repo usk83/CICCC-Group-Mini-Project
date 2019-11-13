@@ -19,6 +19,6 @@ public class Pawn extends Piece {
       return false;
     }
     // ToDo: implement
-    return false;
+    return true;
   }
 }

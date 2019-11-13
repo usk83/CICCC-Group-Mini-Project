@@ -12,6 +12,9 @@ enum Command {
   GO_MOVE,
   INVALID;
 
+  private static final Pattern REGEX_PATTER_UCI
+      = Pattern.compile("([a-zA-Z]+[\\d]+)(?<secondPos>[a-zA-Z]+[\\d]+([q|Q|b|B|k|K|r|R])?)?");
+
   static Command parse(String str) {
     switch (str.toLowerCase()) {
       case "help":
@@ -23,8 +26,7 @@ enum Command {
       case "moves":
         return ALL_POSSIBLE_MOVES;
       default:
-        Pattern pattern = Pattern.compile("([a-z]+[0-9]+)(?<secondPos>[a-z]+[0-9]+([a-z]+)?)?");
-        Matcher matcher = pattern.matcher(str);
+        Matcher matcher = REGEX_PATTER_UCI.matcher(str);
         if (matcher.matches()) {
           if (matcher.group("secondPos") == null) {
             return SQUARE_POSSIBLE_MOVES;
