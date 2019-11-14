@@ -20,7 +20,7 @@ public abstract class Piece {
     symbol = s;
   }
 
-  public boolean isValidMove(int row, int col, boolean isEnemyPiece) {
+  public boolean isValidMove(int row, int col) {
     if(0 < row && 0 < col && row < 8 && col < 8) {
       return true;
     } else {
