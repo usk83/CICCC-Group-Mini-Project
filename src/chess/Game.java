@@ -25,7 +25,6 @@ public class Game {
         + "\n");
     boolean isGameOnGoing = true;
     while (isGameOnGoing) {
-      System.out.println(board);
       String userInput = InputController.getUserInput("Enter UCI (type 'help' for help): ");
       switch (Command.parse(userInput)) {
         case BOARD:
