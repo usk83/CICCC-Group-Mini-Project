@@ -28,6 +28,8 @@ public class Game {
       System.out.println(board);
       String userInput = InputController.getUserInput("Enter UCI (type 'help' for help): ");
       switch (Command.parse(userInput)) {
+        case BOARD:
+          System.out.println(board);
         case RESIGN:
           isGameOnGoing = false;
           break;
