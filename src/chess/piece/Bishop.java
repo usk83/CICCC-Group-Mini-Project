@@ -17,9 +17,9 @@ public class Bishop extends Piece {
   @Override
   public boolean isValidMove(Position newPosition) {
     if (!super.isValidMove(newPosition)) {
-      // ToDo: implement
-      return true;
+      return false;
     }
-    return false;
+    // ToDo: implement
+    return true;
   }
 }
