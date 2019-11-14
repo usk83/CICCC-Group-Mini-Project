@@ -20,9 +20,8 @@ public abstract class Piece {
     symbol = s;
   }
 
-  public boolean isValidMove(Position newPosition) {
-    if(newPosition.getRow() > 0 && newPosition.getCol() > 0
-        && newPosition.getRow() < 8 && newPosition.getCol() < 8) {
+  public boolean isValidMove(int row, int col, boolean isEnemyPiece) {
+    if(0 < row && 0 < col && row < 8 && col < 8) {
       return true;
     } else {
       return false;

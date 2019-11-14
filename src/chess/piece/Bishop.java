@@ -15,8 +15,8 @@ public class Bishop extends Piece {
   }
 
   @Override
-  public boolean isValidMove(Position newPosition) {
-    if (!super.isValidMove(newPosition)) {
+  public boolean isValidMove(int row, int col, boolean isEnemyPiece) {
+    if (!super.isValidMove(row, col, isEnemyPiece)) {
       return false;
     }
     // ToDo: implement
