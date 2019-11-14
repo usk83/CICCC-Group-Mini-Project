@@ -18,7 +18,10 @@ public class Queen extends Piece {
     if (!super.isValidMove(row, col)) {
       return false;
     }
-    // ToDo: implement
+
+    if (row == 0 && col == 0) return false;
+    if ((row == 0 && 1 <= col) || (col == 0 && 1 <= row) || (row - col == 0)) return true;
+
     return false;
   }
 }
