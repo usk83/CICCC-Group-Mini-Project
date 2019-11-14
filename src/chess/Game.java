@@ -51,7 +51,7 @@ public class Game {
     return c - 'a';
   }
 
-  private int convertBoardNumber(int i) {
-    return Math.abs(Character.getNumericValue(i) - 8);
+  private int convertBoardNumber(char c) {
+    return (Character.getNumericValue(c) - 8) * -1;
   }
 }
