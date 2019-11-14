@@ -27,6 +27,13 @@ public class Game {
     while (isGameOnGoing) {
       String userInput = InputController.getUserInput("Enter UCI (type 'help' for help): ");
       switch (Command.parse(userInput)) {
+        case HELP:
+          System.out.println("* type 'help' for help \n " +
+              "* type 'board' to see the board again \n " +
+              "* type 'resign' to resign \n " +
+              "* type 'moves' to list all possible moves \n " +
+              "* type a square (e.g. b1, e2) to list possible moves for that square \n " +
+              "* type a UCI (e.g. b1c3, e7e8q) to make a move");
         case BOARD:
           System.out.println(board);
         case RESIGN:
