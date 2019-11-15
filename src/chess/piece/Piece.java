@@ -3,7 +3,7 @@ package chess.piece;
 import java.lang.IllegalArgumentException;
 import java.util.Map;
 
-public abstract class Piece {
+public abstract class Piece implements Square {
   protected Color color;
   protected char symbol;
 
@@ -24,6 +24,10 @@ public abstract class Piece {
     return true;
   }
 
+  public boolean isValidUniqueMoveByOwnPosition() {
+    return false;
+  }
+
   public void printClassName() {
     final String className = new Object(){}.getClass().getEnclosingClass().getName();
     System.out.println(className);
@@ -33,4 +37,5 @@ public abstract class Piece {
   public String toString() {
     return String.valueOf(symbol);
   }
+
 }
