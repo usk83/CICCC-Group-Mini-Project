@@ -14,8 +14,8 @@ public class King extends Piece {
   }
 
   @Override
-  public boolean isValidMove(int row, int col) {
-    if (!super.isValidMove(row, col)) {
+  public boolean isValidMove(int row, int col, boolean isEnemyPiece) {
+    if (!super.isValidMove(row, col, isEnemyPiece)) {
       return false;
     }
     // ToDo: implement
