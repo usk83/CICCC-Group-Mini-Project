@@ -1,5 +1,7 @@
 package chess.piece;
 
+import chess.Position;
+
 import java.lang.IllegalArgumentException;
 import java.util.Map;
 
@@ -24,7 +26,7 @@ public abstract class Piece implements Square {
     return true;
   }
 
-  public boolean isValidUniqueMoveByOwnPosition() {
+  public boolean isValidUniqueMoveByOwnPosition(Position pos, int row, int col) {
     return false;
   }
 

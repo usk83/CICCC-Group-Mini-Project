@@ -1,5 +1,7 @@
 package chess.piece;
 
+import chess.Position;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,7 +50,7 @@ public class Pawn extends Piece {
   }
 
   @Override
-  public boolean isValidUniqueMoveByOwnPosition() {
+  public boolean isValidUniqueMoveByOwnPosition(Position pos, int row, int col) {
     return true;
   }
 }
