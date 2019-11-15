@@ -21,11 +21,7 @@ public abstract class Piece {
   }
 
   public boolean isValidMove(int row, int col, boolean isEnemyPiece) {
-    if(0 < row && 0 < col && row < 8 && col < 8) {
-      return true;
-    } else {
-      return false;
-    }
+    return true;
   }
 
   public void printClassName() {
