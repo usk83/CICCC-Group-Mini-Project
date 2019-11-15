@@ -18,17 +18,14 @@ enum Command {
   static Command parse(String str) {
     switch (str.toLowerCase()) {
       case "help":
-        System.out.println("* type 'help' for help");
-        System.out.println("* type 'board' to see the board again");
-        System.out.println("* type 'resign' to resign");
-        System.out.println("* type 'moves' to list all possible moves");
-        System.out.println("* type a square (e.g. b1, e2) to list possible moves for that square");
-        System.out.println("* type a UCI (e.g. b1c3, e7e8q) to make a move");
         return HELP;
+
       case "board":
         return BOARD;
+
       case "resign":
         return RESIGN;
+
       case "moves":
         return ALL_POSSIBLE_MOVES;
       default:

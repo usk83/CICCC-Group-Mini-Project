@@ -19,6 +19,17 @@ public class King extends Piece {
       return false;
     }
     // ToDo: implement
+    // if difference of Col & Row is 1, it can move
+    Position currentPosition = null;
+    int diffOfCol = Math.abs(currentPosition.getCol() - newPosition.getCol());
+    int diffOfRow = Math.abs(currentPosition.getRow() - newPosition.getRow());
+    if (diffOfCol <= 1 && diffOfRow <= 1) {
+      return true;
+    }
     return false;
   }
 }
+
+
+
+

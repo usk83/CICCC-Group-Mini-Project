@@ -25,10 +25,31 @@ public class Game {
         + "\n");
     boolean isGameOnGoing = true;
     while (isGameOnGoing) {
-      System.out.println(board);
+      System.out.println("Turn of : " + turn);
       String userInput = InputController.getUserInput("Enter UCI (type 'help' for help): ");
       switch (Command.parse(userInput)) {
+        case HELP:
+          System.out.println("* type 'help' for help \n " +
+              "* type 'board' to see the board again \n " +
+              "* type 'resign' to resign \n " +
+              "* type 'moves' to list all possible moves \n " +
+              "* type a square (e.g. b1, e2) to list possible moves for that square \n " +
+              "* type a UCI (e.g. b1c3, e7e8q) to make a move");
+          break;
+        case BOARD:
+          System.out.println(board);
+          break;
         case RESIGN:
+          int whitewons = 0;
+          int blackwons = 0;
+          if(turn == Color.WHITE) {
+            blackwons ++;
+            System.out.println("GAME OVER " + whitewons + " - " +  blackwons + " BLACK WON BY RESIGNATION");
+          }
+          if(turn == Color.BLACK) {
+            whitewons ++;
+            System.out.println("GAME OVER " + whitewons + " - " +  blackwons + " WHITE WON BY RESIGNATION");
+          }
           isGameOnGoing = false;
           break;
         case GO_MOVE:
@@ -41,6 +62,12 @@ public class Game {
             index++;
           }
           board.update(new Position(moveTo[0], moveTo[1]), new Position(moveTo[2], moveTo[3]));
+          if(turn == Color.WHITE){
+            turn = Color.BLACK;
+          }
+          else {
+            turn = Color.WHITE;
+          }
       }
     }
   }
