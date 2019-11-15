@@ -35,8 +35,8 @@ public class Pawn extends Piece {
     // row = 1 or 2, col = 0 or 1
     if (row == 0 || 3 <= row || 2 <= col) return false;
 
-    // move to capture the diagonally forward opponent piece, or "en passant"
-    if (row == 1 && col == 1) return true;
+    // move to capture the diagonally forward opponent piece
+    if (isEnemyPiece && row == 1 && col == 1) return true;
 
     // move forward
     if (col == 0) {
