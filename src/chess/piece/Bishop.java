@@ -20,6 +20,10 @@ public class Bishop extends Piece {
       return false;
     }
     // ToDo: implement
-    return true;
+    if (Math.abs(newPosition.getCol() - this.position.getCol())
+        == Math.abs(newPosition.getRow() - this.position.getRow())) {
+      return true;
+    }
+    return false;
   }
 }

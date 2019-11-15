@@ -6,6 +6,7 @@ import java.util.Map;
 public abstract class Piece {
   protected Color color;
   protected char symbol;
+  protected Position position;
 
   public Piece(Color color, Map<Color, Character> symbols) {
     if (color == null) {

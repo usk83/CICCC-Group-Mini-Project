@@ -18,7 +18,12 @@ public class Rook extends Piece {
     if (!super.isValidMove(newPosition)) {
       return false;
     }
-
-    return true;
+    // If we passed the first test then check for the specific rook movement
+    if (newPosition.getCol() == this.position.getCol()
+        && newPosition.getRow() == this.position.getRow()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
