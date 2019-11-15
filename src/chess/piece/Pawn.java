@@ -2,8 +2,7 @@ package chess.piece;
 
 import chess.Position;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Pawn extends Piece {
   private static final Map<Color, Character> symbols = new HashMap<Color, Character>(){{
@@ -51,6 +50,32 @@ public class Pawn extends Piece {
 
   @Override
   public boolean isValidUniqueMoveByOwnPosition(Position pos, int row, int col) {
-    return true;
+
+    // en passant
+    if (row == 1 && col == 1) {
+
+      List<Position> positionList = new LinkedList<>();
+      if (0 < pos.getCol()) {
+        Position left = new Position(pos.getRow(), pos.getCol() - 1);
+        positionList.add(left);
+      }
+      Position right = new Position(pos.getRow(), pos.getCol() + 1);
+      positionList.add(right);
+
+      for (Position target: positionList) {
+//      Piece p = getPiece(target);
+//      here is test
+        Piece p1 = new Pawn(Color.WHITE);
+        Piece p2 = new Pawn(Color.BLACK);
+        Piece p3 = new Queen(Color.WHITE);
+
+        if (symbol != p1.symbol) return false;
+        if (color.equals(p1.color)) return false;
+      }
+
+      return true;
+    }
+
+    return false;
   }
 }
