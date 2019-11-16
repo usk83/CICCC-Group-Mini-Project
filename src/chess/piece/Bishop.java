@@ -14,6 +14,7 @@ public class Bishop extends Piece {
     super(color, symbols);
   }
 
+
   @Override
   public boolean isValidMove(Position newPosition) {
     if (!super.isValidMove(newPosition)) {
