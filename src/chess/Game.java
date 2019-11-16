@@ -23,6 +23,7 @@ public class Game {
         + "( (__ ) __ ( ) _) \\___ \\\\___ \\  ( (_ \\/    \\/ \\/ \\ ) _) \\_/\n"
         + " \\___)\\_)(_/(____)(____/(____/   \\___/\\_/\\_/\\_)(_/(____)(_)\n"
         + "\n");
+
     boolean isGameOnGoing = true;
     while (isGameOnGoing) {
       System.out.println("Turn of : " + turn);
@@ -40,16 +41,17 @@ public class Game {
           System.out.println(board);
           break;
         case RESIGN:
-          int whitewons = 0;
-          int blackwons = 0;
-          if(turn == Color.WHITE) {
-            blackwons ++;
-            System.out.println("GAME OVER " + whitewons + " - " +  blackwons + " BLACK WON BY RESIGNATION");
+          String score = "";
+          switch (turn) {
+            case BLACK:
+              score = "1 - 0";
+              break;
+            case WHITE:
+              score = "0 - 1";
+              break;
           }
-          if(turn == Color.BLACK) {
-            whitewons ++;
-            System.out.println("GAME OVER " + whitewons + " - " +  blackwons + " WHITE WON BY RESIGNATION");
-          }
+          switchTurn();
+          System.out.printf("GAME OVER %s %s WON BY RESIGNATION\n", score, turn);
           isGameOnGoing = false;
           break;
         case GO_MOVE:
@@ -62,13 +64,20 @@ public class Game {
             index++;
           }
           board.update(new Position(moveTo[0], moveTo[1]), new Position(moveTo[2], moveTo[3]));
-          if(turn == Color.WHITE){
-            turn = Color.BLACK;
-          }
-          else {
-            turn = Color.WHITE;
-          }
+          switchTurn();
+          break;
       }
+    }
+  }
+
+  private void switchTurn() {
+    switch (turn) {
+      case WHITE:
+        turn = Color.BLACK;
+        break;
+      case BLACK:
+        turn = Color.WHITE;
+        break;
     }
   }
 
