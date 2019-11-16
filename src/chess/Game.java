@@ -79,7 +79,6 @@ public class Game {
       }
   }
 
-
   //  https://stackoverflow.com/questions/15027231/java-how-to-convert-letters-in-a-string-to-a-number
   private int convertLetterToNumber (char c) {
     return c - 'a';
