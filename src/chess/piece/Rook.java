@@ -18,7 +18,10 @@ public class Rook extends Piece {
     if (!super.isValidMove(newPosition)) {
       return false;
     }
-
+    if(newPosition.getCol() == this.position.getCol()
+      || newPosition.getRow() == this.position.getRow()){
     return true;
+  }
+  return false;
   }
 }
