@@ -18,7 +18,11 @@ public class King extends Piece {
     if (!super.isValidMove(newPosition)) {
       return false;
     }
-    // ToDo: implement
+    // if difference of Col & Row is 1, it can move
+    if (Math.abs(this.position.getCol()) - (newPosition.getCol()) <= 1 &&
+        Math.abs(this.position.getRow()) - (newPosition.getRow()) <= 1) {
+      return true;
+    }
     return false;
   }
 }
