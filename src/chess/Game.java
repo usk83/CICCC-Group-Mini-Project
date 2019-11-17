@@ -20,7 +20,7 @@ public class Game {
 
     boolean isGameOnGoing = true;
     while (isGameOnGoing) {
-      System.out.printf("%s to move\n", TUNES[turnIndex]);
+      System.out.printf("\n%s to move\n", TUNES[turnIndex]);
       String userInput = InputController.getUserInput("Enter UCI (type 'help' for help): ");
       switch (Command.parse(userInput)) {
         case HELP:
@@ -34,17 +34,24 @@ public class Game {
                   + "* type a UCI (e.g. b1c3, e7e8q) to make a move");
           break;
         case BOARD:
-          System.out.println(board);
+          System.out.printf("\n%s", board);
           break;
         case RESIGN:
           String[] score = new String[TUNES.length];
           for (int i = 0; i < TUNES.length; i++) {
             score[i] = i == getNextTurnIndex() ? "1" : "0";
           }
+          System.out.printf("\n%s\n", board);
           System.out.printf(
-              "GAME OVER %s %s WON BY RESIGNATION\n",
-              String.join(" - ", score), TUNES[getNextTurnIndex()].toString().toUpperCase());
+              "Game over - %s - %s won by resignation\n",
+              String.join("-", score), TUNES[getNextTurnIndex()]);
           isGameOnGoing = false;
+          break;
+        case ALL_POSSIBLE_MOVES:
+          System.err.println("This command haven't yet implemented.");
+          break;
+        case SQUARE_POSSIBLE_MOVES:
+          System.err.println("This command haven't yet implemented.");
           break;
         case GO_MOVE:
           int[] moveTo = new int[4];
@@ -55,9 +62,17 @@ public class Game {
             moveTo[index] = Character.isDigit(c) ? convertBoardNumber(c) : convertLetterToNumber(c);
             index++;
           }
-          board.update(new Position(moveTo[0], moveTo[1]), new Position(moveTo[2], moveTo[3]));
-          switchTurn();
+          if (!board.update(new Position(moveTo[0], moveTo[1]), new Position(moveTo[2], moveTo[3]))) {
+            // TODO: modify this message appropriately
+            System.err.println("invalid move");
+          } else {
+            System.out.println("OK");
+            System.out.printf("\n%s", board);
+            switchTurn();
+          }
           break;
+        case INVALID:
+          System.out.println("Invalid input, please try again");
       }
     }
   }
@@ -68,8 +83,7 @@ public class Game {
             + "  ___  _  _  ____  ____  ____     ___   __   _  _  ____  _\n"
             + " / __)/ )( \\(  __)/ ___)/ ___)   / __) / _\\ ( \\/ )(  __)/ \\\n"
             + "( (__ ) __ ( ) _) \\___ \\\\___ \\  ( (_ \\/    \\/ \\/ \\ ) _) \\_/\n"
-            + " \\___)\\_)(_/(____)(____/(____/   \\___/\\_/\\_/\\_)(_/(____)(_)\n"
-            + "\n");
+            + " \\___)\\_)(_/(____)(____/(____/   \\___/\\_/\\_/\\_)(_/(____)(_)");
   }
 
   private int getNextTurnIndex() {

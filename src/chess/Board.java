@@ -26,11 +26,13 @@ public class Board {
     initialize();
   }
 
-  public void update(Position pos, Position newPos) {
+  public boolean update(Position pos, Position newPos) {
     Piece p = metrix[pos.getCol()][pos.getRow()];
     metrix[pos.getCol()][pos.getRow()] = null;
     metrix[newPos.getCol()][newPos.getRow()] = p;
     stringRepresentation = new BoardString(metrix);
+    // TODO: only when board successfully updated, return true
+    return true;
   }
 
   @Override
