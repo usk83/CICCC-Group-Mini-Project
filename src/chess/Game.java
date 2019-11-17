@@ -64,7 +64,20 @@ public class Game {
             moveTo[index] = Character.isDigit(c) ? convertBoardNumber(c) : convertLetterToNumber(c);
             index++;
           }
-          board.update(new Position(moveTo[0], moveTo[1]), new Position(moveTo[2], moveTo[3]));
+
+          Position fromPosition =  new Position(moveTo[0], moveTo[1]);
+          Position toPosition =  new Position(moveTo[2], moveTo[3]);
+
+          if (!board.isOwnPiece(fromPosition, turn)) {
+            System.out.println("Can not find your piece in the square you typed.");
+            break;
+          }
+
+          if (!board.isNotPiecesOnHalfway(fromPosition, toPosition)) {
+            System.out.println("Can not move the selected piece because other piece is on halfway.");
+            break;
+          }
+          board.update(fromPosition, toPosition);
           switchTurn();
           break;
       }

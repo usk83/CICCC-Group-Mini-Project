@@ -74,7 +74,61 @@ public class Board implements SquareManageable {
   }
 
   public boolean isPiece(Position pos) {
-    return metrix[pos.getRow()][pos.getCol()] != null;
+    return metrix[pos.getCol()][pos.getRow()] != null;
+  }
+
+  public boolean isOwnPiece(Position pos, Color c) {
+    if (!this.isPiece(pos)) {
+      return false;
+    };
+
+    Piece that = metrix[pos.getCol()][pos.getRow()];
+    return that.getColor() == c;
+  }
+
+  public boolean isNotPiecesOnHalfway(Position from, Position to) {
+    int x = from.getRow() - to.getRow();
+    int y = from.getCol() - to.getCol();
+    int x_abs = Math.abs(x);
+    int y_abs = Math.abs(y);
+
+    // if less than two spaces between the piece and destination
+    if (Math.max(x_abs, y_abs) < 2) return true;
+
+    if ((x_abs == y_abs) || (x_abs == 0) || (y_abs == 0)) {
+
+      int startRow;
+      int endRow;
+      int startCol;
+      int endCol;
+
+      if (0 < x) {
+        startRow = to.getRow();
+        endRow = from.getRow();
+      } else {
+        startRow = from.getRow();
+        endRow = to.getRow();
+      }
+
+      if (0 < y) {
+        startCol = to.getCol();
+        endCol = from.getCol();
+      } else {
+        startCol = from.getCol();
+        endCol = to.getCol();
+      }
+
+      int countRow = 0;
+      int countCol = 0;
+      while ((startRow + countRow + 1 < endRow) || (startCol + countCol + 1 < endCol)) {
+        if (startRow + countRow < endRow) countRow++;
+        if (startCol + countCol < endCol) countCol++;
+        Position p = new Position(startRow + countRow, startCol + countCol );
+        if (this.isPiece(p)) return false;
+      }
+    }
+
+    return true;
   }
 
   @Override
