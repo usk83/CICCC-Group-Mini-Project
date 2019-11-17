@@ -1,7 +1,5 @@
 package chess.piece;
 
-import chess.Position;
-
 import java.util.HashMap;
 import java.util.Map;
 
