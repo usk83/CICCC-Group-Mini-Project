@@ -86,6 +86,12 @@ public class Game {
             break;
           }
 
+          // Check Basic move of a Piece
+          if(!board.ableBasicMove(fromPosition, toPosition, turn)) {
+            System.out.println("The piece you selected doesn't allow to move to the destination");
+            break;
+          }
+
           board.update(fromPosition, toPosition);
           switchTurn();
           break;
