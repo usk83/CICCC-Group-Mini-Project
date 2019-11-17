@@ -1,8 +1,5 @@
 package chess.piece;
 
-import chess.Position;
-
-import java.lang.IllegalArgumentException;
 import java.util.Map;
 
 public abstract class Piece {
@@ -37,7 +34,7 @@ public abstract class Piece {
   }
 
   public void printClassName() {
-    final String className = new Object(){}.getClass().getEnclosingClass().getName();
+    final String className = new Object() {}.getClass().getEnclosingClass().getName();
     System.out.println(className);
   }
 

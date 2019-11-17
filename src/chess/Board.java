@@ -1,6 +1,5 @@
 package chess;
 
-import java.lang.IllegalArgumentException;
 import chess.piece.*;
 
 public class Board implements SquareManageable {

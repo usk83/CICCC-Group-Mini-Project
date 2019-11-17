@@ -5,10 +5,13 @@ import chess.Position;
 import java.util.*;
 
 public class Pawn extends Piece {
-  private static final Map<Color, Character> symbols = new HashMap<Color, Character>(){{
-    put(Color.WHITE, '♙');
-    put(Color.BLACK, '♟');
-  }};
+  private static final Map<Color, Character> symbols =
+      new HashMap<Color, Character>() {
+        {
+          put(Color.WHITE, '♙');
+          put(Color.BLACK, '♟');
+        }
+      };
 
 
   public Pawn(Color color) {
