@@ -1,6 +1,5 @@
 package chess.piece;
 
-import java.lang.IllegalArgumentException;
 import java.util.Map;
 
 public abstract class Piece {
@@ -22,8 +21,10 @@ public abstract class Piece {
   }
 
   public boolean isValidMove(Position newPosition) {
-    if(newPosition.getRow() > 0 && newPosition.getCol() > 0
-        && newPosition.getRow() < 8 && newPosition.getCol() < 8) {
+    if (newPosition.getRow() > 0
+        && newPosition.getCol() > 0
+        && newPosition.getRow() < 8
+        && newPosition.getCol() < 8) {
       return true;
     } else {
       return false;
@@ -31,7 +32,7 @@ public abstract class Piece {
   }
 
   public void printClassName() {
-    final String className = new Object(){}.getClass().getEnclosingClass().getName();
+    final String className = new Object() {}.getClass().getEnclosingClass().getName();
     System.out.println(className);
   }
 
