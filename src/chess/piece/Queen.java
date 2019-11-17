@@ -19,6 +19,8 @@ public class Queen extends Piece {
       return false;
     }
 
+    if (Math.abs(x) == Math.abs(y) || x == 0 || y == 0) return true;
+
     return false;
   }
 }
