@@ -12,7 +12,7 @@ public class Game {
   public Game() {
     turnIndex = 0;
     turnCount = 1;
-    board = new Board();
+    board = new Board(TUNES);
   }
 
   public void play() {
