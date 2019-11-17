@@ -21,6 +21,7 @@ public class Bishop extends Piece {
     if (!super.isValidMove(x, y, isEnemyExisted)) {
       return false;
     }
+    if (Math.abs(x) == Math.abs(y)) return true;
     return false;
   }
 }

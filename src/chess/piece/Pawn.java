@@ -24,6 +24,7 @@ public class Pawn extends Piece {
       return false;
     }
 
+    // this piece can move forward
     if (this.color == Color.BLACK) {
       x = x * -1;
       y = y * -1;
@@ -35,7 +36,7 @@ public class Pawn extends Piece {
     if (y < 0 || 2 < y) return false;
 
     // Diagonally forward
-    if (isEnemyExisted && y == 1 && (x == 1 || x == -1)) return true;
+    if (isEnemyExisted && y == 1 && Math.abs(x) == 1) return true;
 
     // forward two
     if (!isEnemyExisted && lastMovedTurn == 0 && x == 0 && y == 2) return true;

@@ -21,6 +21,7 @@ public class King extends Piece {
     if (!super.isValidMove(x, y, isEnemyExisted)) {
       return false;
     }
+    if ((Math.abs(x) < 2) && (Math.abs(y) < 2)) return true;
     return false;
   }
 }

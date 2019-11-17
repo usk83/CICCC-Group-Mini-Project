@@ -21,7 +21,8 @@ public class Knight extends Piece {
     if (!super.isValidMove(x, y, isEnemyExisted)) {
       return false;
     }
-    // ToDo: implement
+    if ((Math.abs(x) == 1) && (Math.abs(y) == 2)) return true;
+    if ((Math.abs(x) == 2) && (Math.abs(y) == 1)) return true;
     return false;
   }
 }

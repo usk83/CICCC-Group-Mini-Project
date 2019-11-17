@@ -21,6 +21,7 @@ public class Rook extends Piece {
     if (!super.isValidMove(x, y, isEnemyExisted)) {
       return false;
     }
+    if (x == 0 || y == 0) return true;
     return false;
   }
 }
