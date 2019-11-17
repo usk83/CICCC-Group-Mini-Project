@@ -3,37 +3,31 @@ package chess;
 import chess.piece.*;
 
 public class Game {
-  private static final Color PLAY_FIRST = Color.WHITE;
+  private static final Color[] TUNES = {Color.WHITE, Color.BLACK};
 
+  private int turnIndex;
+  private int turnCount;
   private Board board;
-  private Color turn;
 
   public Game() {
-    board = new Board();
-    turn = PLAY_FIRST;
+    turnIndex = 0;
+    turnCount = 1;
+    board = new Board(TUNES);
   }
 
   public void play() {
-    /*
-     * ToDo: implement below
-     */
-    System.out.println(
-        ""
-            + "  ___  _  _  ____  ____  ____     ___   __   _  _  ____  _\n"
-            + " / __)/ )( \\(  __)/ ___)/ ___)   / __) / _\\ ( \\/ )(  __)/ \\\n"
-            + "( (__ ) __ ( ) _) \\___ \\\\___ \\  ( (_ \\/    \\/ \\/ \\ ) _) \\_/\n"
-            + " \\___)\\_)(_/(____)(____/(____/   \\___/\\_/\\_/\\_)(_/(____)(_)\n"
-            + "\n");
+    displayTitle();
 
     boolean isGameOnGoing = true;
     System.out.println(board);
     while (isGameOnGoing) {
-      System.out.println("Turn of : " + turn);
+      System.out.printf("\n%s to move\n", TUNES[turnIndex]);
       String userInput = InputController.getUserInput("Enter UCI (type 'help' for help): ");
       switch (Command.parse(userInput)) {
         case HELP:
           System.out.println(
-              "* type 'help' for help \n "
+              ""
+                  + "* type 'help' for help \n "
                   + "* type 'board' to see the board again \n "
                   + "* type 'resign' to resign \n "
                   + "* type 'moves' to list all possible moves \n "
@@ -41,21 +35,24 @@ public class Game {
                   + "* type a UCI (e.g. b1c3, e7e8q) to make a move");
           break;
         case BOARD:
-          System.out.println(board);
+          System.out.printf("\n%s", board);
           break;
         case RESIGN:
-          String score = "";
-          switch (turn) {
-            case BLACK:
-              score = "1 - 0";
-              break;
-            case WHITE:
-              score = "0 - 1";
-              break;
+          String[] score = new String[TUNES.length];
+          for (int i = 0; i < TUNES.length; i++) {
+            score[i] = i == getNextTurnIndex() ? "1" : "0";
           }
-          switchTurn();
-          System.out.printf("GAME OVER %s %s WON BY RESIGNATION\n", score, turn);
+          System.out.printf("\n%s\n", board);
+          System.out.printf(
+              "Game over - %s - %s won by resignation\n",
+              String.join("-", score), TUNES[getNextTurnIndex()]);
           isGameOnGoing = false;
+          break;
+        case ALL_POSSIBLE_MOVES:
+          System.err.println("This command haven't yet implemented.");
+          break;
+        case SQUARE_POSSIBLE_MOVES:
+          System.err.println("This command haven't yet implemented.");
           break;
         case GO_MOVE:
           int[] moveTo = new int[4];
@@ -95,24 +92,34 @@ public class Game {
           }
 
           board.update(fromPosition, toPosition);
+          System.out.println("OK");
+          System.out.printf("\n%s", board);
           switchTurn();
           break;
+        case INVALID:
+          System.out.println("Invalid input, please try again");
       }
     }
   }
 
-  private void switchTurn() {
-    switch (turn) {
-      case WHITE:
-        turn = Color.BLACK;
-        break;
-      case BLACK:
-        turn = Color.WHITE;
-        break;
-    }
+  private static final void displayTitle() {
+    System.out.println(
+        ""
+            + "  ___  _  _  ____  ____  ____     ___   __   _  _  ____  _\n"
+            + " / __)/ )( \\(  __)/ ___)/ ___)   / __) / _\\ ( \\/ )(  __)/ \\\n"
+            + "( (__ ) __ ( ) _) \\___ \\\\___ \\  ( (_ \\/    \\/ \\/ \\ ) _) \\_/\n"
+            + " \\___)\\_)(_/(____)(____/(____/   \\___/\\_/\\_/\\_)(_/(____)(_)");
   }
 
-  //
+  private int getNextTurnIndex() {
+    return (turnIndex + 1) % TUNES.length;
+  }
+
+  private void switchTurn() {
+    turnIndex = getNextTurnIndex();
+    turnCount++;
+  }
+
   // https://stackoverflow.com/questions/15027231/java-how-to-convert-letters-in-a-string-to-a-number
   private int convertLetterToNumber(char c) {
     return c - 'a';

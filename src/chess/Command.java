@@ -30,12 +30,10 @@ enum Command {
         if (matcher.matches()) {
           if (matcher.group("secondPos") == null) {
             return SQUARE_POSSIBLE_MOVES;
-          } else {
-            return GO_MOVE;
           }
+          return GO_MOVE;
         }
-
-        return INVALID;
     }
+    return INVALID;
   }
 }
