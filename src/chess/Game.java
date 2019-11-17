@@ -65,8 +65,8 @@ public class Game {
             index++;
           }
 
-          Position fromPosition =  new Position(moveTo[0], moveTo[1]);
-          Position toPosition =  new Position(moveTo[2], moveTo[3]);
+          Position fromPosition = new Position(moveTo[0], moveTo[1]);
+          Position toPosition = new Position(moveTo[2], moveTo[3]);
 
           // Check FromPosition
           if (!board.isOwnPiece(fromPosition, turn)) {
