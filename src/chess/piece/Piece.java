@@ -5,7 +5,7 @@ import chess.Position;
 import java.lang.IllegalArgumentException;
 import java.util.Map;
 
-public abstract class Piece implements Square {
+public abstract class Piece {
   protected Color color;
   protected char symbol;
 
@@ -24,10 +24,6 @@ public abstract class Piece implements Square {
 
   public boolean isValidMove(int row, int col, boolean isEnemyPiece) {
     return true;
-  }
-
-  public boolean isValidUniqueMoveByOwnPosition(Position pos, int row, int col) {
-    return false;
   }
 
   public void printClassName() {
