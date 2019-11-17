@@ -3,31 +3,32 @@ package chess;
 import chess.piece.*;
 
 public class BoardString {
-  private final static int WIDTH = 8 + 25 + 4 + 1;
-  private final static int HEIGHT = 8 + 9 + 2;
-  private final static int LENGTH = HEIGHT * WIDTH;
-  private final static String ABC_LINE = "    A   B   C   D   E   F   G   H    \n";
-  private final static String BORDER_LINE = "  +---+---+---+---+---+---+---+---+  \n";
-  private final static String NUM_LINE_TEMPLATE = "%d |   |   |   |   |   |   |   |   | %d\n";
-  private final static String TEMPLATE = ABC_LINE
-      + BORDER_LINE
-      + String.format(NUM_LINE_TEMPLATE, 8, 8)
-      + BORDER_LINE
-      + String.format(NUM_LINE_TEMPLATE, 7, 7)
-      + BORDER_LINE
-      + String.format(NUM_LINE_TEMPLATE, 6, 6)
-      + BORDER_LINE
-      + String.format(NUM_LINE_TEMPLATE, 5, 5)
-      + BORDER_LINE
-      + String.format(NUM_LINE_TEMPLATE, 4, 4)
-      + BORDER_LINE
-      + String.format(NUM_LINE_TEMPLATE, 3, 3)
-      + BORDER_LINE
-      + String.format(NUM_LINE_TEMPLATE, 2, 2)
-      + BORDER_LINE
-      + String.format(NUM_LINE_TEMPLATE, 1, 1)
-      + BORDER_LINE
-      + ABC_LINE;
+  private static final int WIDTH = 8 + 25 + 4 + 1;
+  private static final int HEIGHT = 8 + 9 + 2;
+  private static final int LENGTH = HEIGHT * WIDTH;
+  private static final String ABC_LINE = "    A   B   C   D   E   F   G   H    \n";
+  private static final String BORDER_LINE = "  +---+---+---+---+---+---+---+---+  \n";
+  private static final String NUM_LINE_TEMPLATE = "%d |   |   |   |   |   |   |   |   | %d\n";
+  private static final String TEMPLATE =
+      ABC_LINE
+          + BORDER_LINE
+          + String.format(NUM_LINE_TEMPLATE, 8, 8)
+          + BORDER_LINE
+          + String.format(NUM_LINE_TEMPLATE, 7, 7)
+          + BORDER_LINE
+          + String.format(NUM_LINE_TEMPLATE, 6, 6)
+          + BORDER_LINE
+          + String.format(NUM_LINE_TEMPLATE, 5, 5)
+          + BORDER_LINE
+          + String.format(NUM_LINE_TEMPLATE, 4, 4)
+          + BORDER_LINE
+          + String.format(NUM_LINE_TEMPLATE, 3, 3)
+          + BORDER_LINE
+          + String.format(NUM_LINE_TEMPLATE, 2, 2)
+          + BORDER_LINE
+          + String.format(NUM_LINE_TEMPLATE, 1, 1)
+          + BORDER_LINE
+          + ABC_LINE;
 
   // Smaller scall example
   //     A   B   C
@@ -68,7 +69,7 @@ public class BoardString {
     int position = (y + 1) * 2 * WIDTH + (x + 1) * 4;
     if (p == null) {
       body.replace(position, position + 1, " ");
-    } else  {
+    } else {
       body.replace(position, position + 1, String.valueOf(p));
     }
   }

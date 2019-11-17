@@ -12,8 +12,8 @@ enum Command {
   GO_MOVE,
   INVALID;
 
-  private static final Pattern REGEX_PATTER_UCI
-      = Pattern.compile("([a-zA-Z]+[\\d]+)(?<secondPos>[a-zA-Z]+[\\d]+([q|Q|b|B|k|K|r|R])?)?");
+  private static final Pattern REGEX_PATTER_UCI =
+      Pattern.compile("([a-zA-Z]+[\\d]+)(?<secondPos>[a-zA-Z]+[\\d]+([q|Q|b|B|k|K|r|R])?)?");
 
   static Command parse(String str) {
     switch (str.toLowerCase()) {

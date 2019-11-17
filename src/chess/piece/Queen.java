@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Queen extends Piece {
-  private static final Map<Color, Character> symbols = new HashMap<Color, Character>(){{
-    put(Color.WHITE, '♕');
-    put(Color.BLACK, '♛');
-  }};
+  private static final Map<Color, Character> symbols =
+      new HashMap<Color, Character>() {
+        {
+          put(Color.WHITE, '♕');
+          put(Color.BLACK, '♛');
+        }
+      };
 
   public Queen(Color color) {
     super(color, symbols);
