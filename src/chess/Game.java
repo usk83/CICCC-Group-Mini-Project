@@ -25,6 +25,7 @@ public class Game {
         + "\n");
 
     boolean isGameOnGoing = true;
+    System.out.println(board);
     while (isGameOnGoing) {
       System.out.println("Turn of : " + turn);
       String userInput = InputController.getUserInput("Enter UCI (type 'help' for help): ");
