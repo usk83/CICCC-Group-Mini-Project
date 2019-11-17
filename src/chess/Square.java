@@ -1,7 +1,10 @@
 package chess;
 
-import chess.Position;
+import chess.piece.Piece;
 
 public interface Square {
-  public boolean isValidUniqueMoveByOwnPosition(Position pos, int row, int col);
+  public Piece get(int row, int col);
+  public void update(int fromRow, int fromCol, int toRow, int toCol);
+  public void remove(int row, int col);
+  public Piece[] getAttackedList(int row, int col);
 }
