@@ -3,12 +3,12 @@ package chess;
 import java.lang.IllegalArgumentException;
 import chess.piece.*;
 
-public class Board implements ManageableSquare {
+public class Board implements SquareManageable {
   private static final Piece[][] INITIAL_BOARD;
 
   private Piece[][] metrix;
   private BoardString stringRepresentation;
-  private ManageableSquare[] Square;
+  private SquareManageable[] Square;
 
   static {
     INITIAL_BOARD = new Piece[8][8];
@@ -77,5 +77,25 @@ public class Board implements ManageableSquare {
   @Override
   public String toString() {
     return stringRepresentation.toString();
+  }
+
+  @Override
+  public Piece get(int row, int col) {
+    return null;
+  }
+
+  @Override
+  public void update(int fromRow, int fromCol, int toRow, int toCol) {
+
+  }
+
+  @Override
+  public void remove(int row, int col) {
+
+  }
+
+  @Override
+  public Piece[] getAttackedList(int row, int col) {
+    return new Piece[0];
   }
 }
