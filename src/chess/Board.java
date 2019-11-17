@@ -73,6 +73,10 @@ public class Board implements SquareManageable {
     stringRepresentation = new BoardString(metrix);
   }
 
+  public boolean isPiece(Position pos) {
+    return metrix[pos.getRow()][pos.getCol()] != null;
+  }
+
   @Override
   public String toString() {
     return stringRepresentation.toString();
