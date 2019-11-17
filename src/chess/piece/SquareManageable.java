@@ -1,6 +1,4 @@
-package chess;
-
-import chess.piece.Piece;
+package chess.piece;
 
 public interface SquareManageable {
   public Piece get(int row, int col);
