@@ -2,7 +2,8 @@ package chess.piece;
 
 import chess.Position;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Pawn extends Piece {
   private static final Map<Color, Character> symbols =
