@@ -68,13 +68,13 @@ public class Game {
           Position toPosition = new Position(moveTo[2], moveTo[3]);
 
           // Check FromPosition
-          if (!board.isOwnPiece(fromPosition, turn)) {
+          if (!board.isOwnPiece(fromPosition, TUNES[turnIndex])) {
             System.out.println("Can not find your own piece you want to move.");
             break;
           }
 
           // Check ToPosition
-          if (board.isPiece(toPosition) && board.isOwnPiece(toPosition, turn)) {
+          if (board.isPiece(toPosition) && board.isOwnPiece(toPosition, TUNES[turnIndex])) {
             System.out.println("Your piece already exists on the destination your piece try to move.");
             break;
           }
@@ -86,7 +86,7 @@ public class Game {
           }
 
           // Check Basic move of a Piece
-          if(!board.ableBasicMove(fromPosition, toPosition, turn)) {
+          if(!board.ableBasicMove(fromPosition, toPosition, TUNES[turnIndex])) {
             System.out.println("The piece you selected doesn't allow to move to the destination");
             break;
           }
