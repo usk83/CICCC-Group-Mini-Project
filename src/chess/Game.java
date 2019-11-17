@@ -17,9 +17,9 @@ public class Game {
 
   public void play() {
     displayTitle();
+    System.out.printf("\n%s", board);
 
     boolean isGameOnGoing = true;
-    System.out.println(board);
     while (isGameOnGoing) {
       System.out.printf("\n%s to move\n", TUNES[turnIndex]);
       String userInput = InputController.getUserInput("Enter UCI (type 'help' for help): ");
