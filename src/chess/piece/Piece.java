@@ -8,6 +8,7 @@ import java.util.Map;
 public abstract class Piece {
   protected Color color;
   protected char symbol;
+  protected int lastMovedTurn;
 
   public Piece(Color color, Map<Color, Character> symbols) {
     if (color == null) {
@@ -20,6 +21,11 @@ public abstract class Piece {
 
     this.color = color;
     symbol = s;
+    this.lastMovedTurn = 0;
+  }
+
+  public void setLastMovedTurn(int lastMovedTurn) {
+    this.lastMovedTurn = lastMovedTurn;
   }
 
   public boolean isValidMove(int row, int col, boolean isEnemyPiece) {
