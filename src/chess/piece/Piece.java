@@ -24,6 +24,10 @@ public abstract class Piece {
     this.lastMovedTurn = 0;
   }
 
+  public Color getColor() {
+    return color;
+  }
+
   public void setLastMovedTurn(int lastMovedTurn) {
     this.lastMovedTurn = lastMovedTurn;
   }
