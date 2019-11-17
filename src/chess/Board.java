@@ -8,7 +8,6 @@ public class Board implements SquareManageable {
 
   private Piece[][] metrix;
   private BoardString stringRepresentation;
-  private SquareManageable[] Square;
 
   static {
     INITIAL_BOARD = new Piece[8][8];
