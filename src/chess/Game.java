@@ -68,15 +68,24 @@ public class Game {
           Position fromPosition =  new Position(moveTo[0], moveTo[1]);
           Position toPosition =  new Position(moveTo[2], moveTo[3]);
 
+          // Check FromPosition
           if (!board.isOwnPiece(fromPosition, turn)) {
-            System.out.println("Can not find your piece in the square you typed.");
+            System.out.println("Can not find your own piece you want to move.");
             break;
           }
 
+          // Check ToPosition
+          if (board.isPiece(toPosition) && board.isOwnPiece(toPosition, turn)) {
+            System.out.println("Your piece already exists on the destination your piece try to move.");
+            break;
+          }
+
+          // Check Halfway
           if (!board.isNotPiecesOnHalfway(fromPosition, toPosition)) {
             System.out.println("Can not move the selected piece because other piece is on halfway.");
             break;
           }
+
           board.update(fromPosition, toPosition);
           switchTurn();
           break;
