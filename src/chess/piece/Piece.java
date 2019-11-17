@@ -32,7 +32,7 @@ public abstract class Piece {
     this.lastMovedTurn = lastMovedTurn;
   }
 
-  public boolean isValidMove(int row, int col, boolean isEnemyPiece) {
+  public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
     return true;
   }
 

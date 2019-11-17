@@ -16,8 +16,8 @@ public class Pawn extends Piece {
   }
 
   @Override
-  public boolean isValidMove(int row, int col, boolean isEnemyPiece) {
-    if (!super.isValidMove(row, col, isEnemyPiece)) {
+  public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
+    if (!super.isValidMove(x, y, isEnemyExisted)) {
       return false;
     }
 

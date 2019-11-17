@@ -14,13 +14,10 @@ public class Queen extends Piece {
   }
 
   @Override
-  public boolean isValidMove(int row, int col, boolean isEnemyPiece) {
-    if (!super.isValidMove(row, col, isEnemyPiece)) {
+  public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
+    if (!super.isValidMove(x, y, isEnemyExisted)) {
       return false;
     }
-
-    if (row == 0 && col == 0) return false;
-    if ((row == 0 && 1 <= col) || (col == 0 && 1 <= row) || (row - col == 0)) return true;
 
     return false;
   }
