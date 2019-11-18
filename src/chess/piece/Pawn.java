@@ -12,8 +12,11 @@ public class Pawn extends Piece {
         }
       };
 
+  private int didTwoStepMove;
+
   public Pawn(Color color) {
     super(color, symbols);
+    didTwoStepMove = 0;
   }
 
   @Override
@@ -34,5 +37,13 @@ public class Pawn extends Piece {
     }
 
     return false;
+  }
+
+  @Override
+  public void recordMoved(int x, int y, int turn) {
+    this.recordMoved(x, y, turn);
+    if (y == 2) {
+      didTwoStepMove = turn;
+    }
   }
 }
