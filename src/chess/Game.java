@@ -38,14 +38,7 @@ public class Game {
           System.out.printf("\n%s", board);
           break;
         case RESIGN:
-          String[] score = new String[TURNS.length];
-          for (int i = 0; i < TURNS.length; i++) {
-            score[i] = i == getNextTurnIndex() ? "1" : "0";
-          }
-          System.out.printf("\n%s\n", board);
-          System.out.printf(
-              "Game over - %s - %s won by resignation\n",
-              String.join("-", score), TURNS[getNextTurnIndex()]);
+          printFinalMessage(getNextTurnIndex(), "won by resignation");
           isGameOnGoing = false;
           break;
         case ALL_POSSIBLE_MOVES:
@@ -65,12 +58,14 @@ public class Game {
           try {
             board.update(from, to, input.params, TURNS[turnIndex], turnCount);
             System.out.println("OK");
-            System.out.printf("\n%s", board);
 
-            // TODO: Check and Checkmate handling
-            // if (checkmate) {}
-
-            switchTurn();
+            if (board.isCheckmated(TURNS[getNextTurnIndex()])) {
+              printFinalMessage(turnIndex, "won by checkmate");
+              isGameOnGoing = false;
+            } else {
+              System.out.printf("\n%s", board);
+              switchTurn();
+            }
           } catch (InvalidMoveException e) {
             System.err.println(e.getMessage());
           }
@@ -90,6 +85,17 @@ public class Game {
             + " / __)/ )( \\(  __)/ ___)/ ___)   / __) / _\\ ( \\/ )(  __)/ \\\n"
             + "( (__ ) __ ( ) _) \\___ \\\\___ \\  ( (_ \\/    \\/ \\/ \\ ) _) \\_/\n"
             + " \\___)\\_)(_/(____)(____/(____/   \\___/\\_/\\_/\\_)(_/(____)(_)");
+  }
+
+  private final void printFinalMessage(int winnerIndex, String result) {
+    // TODO: consider draw game
+    String[] score = new String[TURNS.length];
+    for (int i = 0; i < TURNS.length; i++) {
+      score[i] = i == winnerIndex ? "1" : "0";
+    }
+    System.out.printf("\n%s\n", board);
+    System.out.printf(
+        "Game over - %s - %s %s\n", String.join("-", score), TURNS[winnerIndex], result);
   }
 
   private int getNextTurnIndex() {
