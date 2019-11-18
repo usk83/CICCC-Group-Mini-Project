@@ -54,6 +54,15 @@ public class Board implements SquareManageable {
     return (Integer.valueOf(y) - 8) * -1;
   }
 
+  private final int[] convertDirection(int x, int y, Color turn) {
+    if (turn == turns[0]) {
+      y *= -1;
+    } else if (turn == turns[0]) {
+      x *= -1;
+    }
+    return new int[] {x, y};
+  }
+
   private Piece getPiece(Position pos) {
     return metrix[pos.getCol()][pos.getRow()];
   }
@@ -80,13 +89,10 @@ public class Board implements SquareManageable {
     }
 
     // calculate move from the piece perspective
-    int x = to.getRow() - from.getRow();
-    int y = to.getCol() - from.getCol();
-    if (turn == turns[0]) {
-      y *= -1;
-    } else if (turn == turns[0]) {
-      x *= -1;
-    }
+    int[] directions =
+        convertDirection(to.getRow() - from.getRow(), to.getCol() - from.getCol(), turn);
+    int x = directions[0];
+    int y = directions[1];
 
     /*
      * TODO: check if special move is available
