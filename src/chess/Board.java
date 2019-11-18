@@ -76,7 +76,7 @@ public class Board implements SquareManageable {
 
     // check if there is turn's piece at `from` position
     if (targetPiece == null || targetPiece.getColor() != turn) {
-      throw new InvalidMoveException("Can not find your own piece you want to move.");
+      throw new InvalidMoveException("Can not find your own piece to move.");
     }
 
     // calculate move from the piece perspective
@@ -101,8 +101,7 @@ public class Board implements SquareManageable {
     boolean isEnemyPieceOnDest = false;
     if (destPiece != null) {
       if (destPiece.getColor() == turn) {
-        throw new InvalidMoveException(
-            "Your piece already exists on the destination your piece try to move.");
+        throw new InvalidMoveException("Your other piece is at the destination.");
       } else {
         isEnemyPieceOnDest = true;
       }
@@ -110,14 +109,12 @@ public class Board implements SquareManageable {
 
     // move is invalid if there is a piece between `from` and `to`
     if (isPieceExistedBetween(from, to)) {
-      throw new InvalidMoveException(
-          "Can not move the selected piece because other piece is on halfway.");
+      throw new InvalidMoveException("Can not jump over other pieces.");
     }
 
     // check if move is valid from the piece's perspective
     if (!targetPiece.isValidMove(x, y, isEnemyPieceOnDest)) {
-      throw new InvalidMoveException(
-          "The piece you selected doesn't allow to move to the destination");
+      throw new InvalidMoveException("Not a valid move for the piece.");
     }
 
     targetPiece.setLastMovedTurn(turnCount);
