@@ -17,12 +17,7 @@ enum Command {
         return BOARD;
       case "resign":
         return RESIGN;
-      case "moves":
-        return ALL_POSSIBLE_MOVES;
       default:
-        if (Board.REGEX_PATTERN_LIST_MOVES.matcher(str).matches()) {
-          return SQUARE_POSSIBLE_MOVES;
-        }
         if (Board.REGEX_PATTERN_MOVE.matcher(str).matches()) {
           return GO_MOVE;
         }

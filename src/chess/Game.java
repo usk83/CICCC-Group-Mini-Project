@@ -30,8 +30,6 @@ public class Game {
                   + "* type 'help' for help \n "
                   + "* type 'board' to see the board again \n "
                   + "* type 'resign' to resign \n "
-                  + "* type 'moves' to list all possible moves \n "
-                  + "* type a square (e.g. b1, e2) to list possible moves for that square \n "
                   + "* type a UCI (e.g. b1c3, e7e8q) to make a move");
           break;
         case BOARD:
@@ -40,12 +38,6 @@ public class Game {
         case RESIGN:
           printFinalMessage(getNextTurnIndex(), "won by resignation");
           isGameOnGoing = false;
-          break;
-        case ALL_POSSIBLE_MOVES:
-          System.err.println("This command haven't yet implemented.");
-          break;
-        case SQUARE_POSSIBLE_MOVES:
-          System.err.println("This command haven't yet implemented.");
           break;
         case GO_MOVE:
           Position from = Board.parsePosition(input.params.get("fromX"), input.params.get("fromY"));
