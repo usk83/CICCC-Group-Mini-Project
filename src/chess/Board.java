@@ -4,11 +4,15 @@ import chess.piece.*;
 import java.util.regex.Pattern;
 
 public class Board implements SquareManageable {
-  public static final Pattern REGEX_PATTERN_LIST_MOVES = Pattern.compile("^(?<of>[a-h][1-8])$");
+  public static final Pattern REGEX_PATTERN_LIST_MOVES =
+      Pattern.compile("^(?<ofX>[a-h])(?<ofY>[1-8])$");
   public static final Pattern REGEX_PATTERN_MOVE =
-      Pattern.compile("^(?<from>[a-h][1-8])(?<to>[a-h][1-8])(?<promotion>[q|b|k|r])?$");
-  public static final String[] REGEX_PATTERN_LIST_MOVES_GROUP_NAMES = {"of"};
-  public static final String[] REGEX_PATTERN_MOVE_GROUP_NAMES = {"from", "to", "promotion"};
+      Pattern.compile(
+          "^(?<fromX>[a-h])(?<fromY>[1-8])(?<toX>[a-h])(?<toY>[1-8])(?<promotion>[q|b|k|r])?$");
+  public static final String[] REGEX_PATTERN_LIST_MOVES_GROUP_NAMES = {"ofX", "ofY"};
+  public static final String[] REGEX_PATTERN_MOVE_GROUP_NAMES = {
+    "fromX", "fromY", "toX", "toY", "promotion"
+  };
 
   private Color[] turns;
   private Piece[][] metrix;
@@ -31,6 +35,22 @@ public class Board implements SquareManageable {
   public void clear(Color[] turns) {
     this.turns = turns;
     initialize();
+  }
+
+  public static final Position parsePosition(String x, String y) {
+    return new Position(convertY(y), convertX(x));
+  }
+
+  private static final int convertX(String x) {
+    int posX = 0;
+    for (int i = 0; i < x.length(); i++) {
+      posX += ((x.charAt(i) - 'a') + 1) * (int) Math.pow(26, x.length() - 1 - i);
+    }
+    return posX - 1;
+  }
+
+  private static final int convertY(String y) {
+    return (Integer.valueOf(y) - 8) * -1;
   }
 
   public boolean update(Position pos, Position newPos, int turn) {
