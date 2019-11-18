@@ -96,15 +96,20 @@ public class Board implements SquareManageable {
      * try normal move
      */
     // check the piece at `to` position
-    // if there is turn's piece, invalid
     Piece destPiece = getPiece(to);
     boolean isEnemyPieceOnDest = false;
+    boolean destError = false;
     if (destPiece != null) {
       if (destPiece.getColor() == turn) {
-        throw new InvalidMoveException("Your other piece is at the destination.");
+        destError = true;
       } else {
         isEnemyPieceOnDest = true;
       }
+    }
+
+    // check if move is valid from the piece's perspective
+    if (!targetPiece.isValidMove(x, y, isEnemyPieceOnDest)) {
+      throw new InvalidMoveException("Not a valid move for the piece.");
     }
 
     // move is invalid if there is a piece between `from` and `to`
@@ -112,9 +117,9 @@ public class Board implements SquareManageable {
       throw new InvalidMoveException("Can not jump over other pieces.");
     }
 
-    // check if move is valid from the piece's perspective
-    if (!targetPiece.isValidMove(x, y, isEnemyPieceOnDest)) {
-      throw new InvalidMoveException("Not a valid move for the piece.");
+    // if there is turn's piece at the destination, invalid
+    if (destError) {
+      throw new InvalidMoveException("Your other piece is at the destination.");
     }
 
     targetPiece.setLastMovedTurn(turnCount);
@@ -168,6 +173,18 @@ public class Board implements SquareManageable {
     }
 
     return false;
+  }
+
+  public boolean isCheckmated(Color turn) {
+    // NOTE: it might be better to hold a pre-calculated list of essentials
+    for (Piece[] row : metrix) {
+      for (Piece piece : row) {
+        if (piece == null) continue;
+        if (piece.getColor() != turn) continue;
+        if (piece.isEssential()) return false;
+      }
+    }
+    return true;
   }
 
   @Override

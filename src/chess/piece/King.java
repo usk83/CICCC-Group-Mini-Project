@@ -13,7 +13,7 @@ public class King extends Piece {
       };
 
   public King(Color color) {
-    super(color, symbols);
+    super(color, symbols, true);
   }
 
   @Override

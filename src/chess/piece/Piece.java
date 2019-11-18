@@ -3,11 +3,16 @@ package chess.piece;
 import java.util.Map;
 
 public abstract class Piece {
-  protected Color color;
-  protected char symbol;
+  private Color color;
+  private char symbol;
+  private boolean isEssential;
   protected int lastMovedTurn;
 
   public Piece(Color color, Map<Color, Character> symbols) {
+    this(color, symbols, false);
+  }
+
+  public Piece(Color color, Map<Color, Character> symbols, boolean isEssential) {
     if (color == null) {
       throw new IllegalArgumentException("`color` must be specified.");
     }
@@ -18,11 +23,16 @@ public abstract class Piece {
 
     this.color = color;
     symbol = s;
+    this.isEssential = isEssential;
     lastMovedTurn = 0;
   }
 
   public Color getColor() {
     return color;
+  }
+
+  public boolean isEssential() {
+    return isEssential;
   }
 
   public void setLastMovedTurn(int lastMovedTurn) {
