@@ -47,7 +47,6 @@ public class Pawn extends Piece {
       Color turn,
       int turnCount)
       throws InvalidOptionsException, InvalidSpecialMoveException, NotEnoughOptionsException {
-
     Piece dest = square.get(xDiff, yDiff);
     if (dest == null
         ? !isValidMove(xDiff, yDiff, false)
