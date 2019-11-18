@@ -27,6 +27,8 @@ public abstract class Piece {
     lastMovedTurn = 0;
   }
 
+  public abstract boolean isValidMove(int x, int y, boolean isEnemyExisted);
+
   public Color getColor() {
     return color;
   }
@@ -38,8 +40,6 @@ public abstract class Piece {
   public void setLastMovedTurn(int lastMovedTurn) {
     this.lastMovedTurn = lastMovedTurn;
   }
-
-  public abstract boolean isValidMove(int x, int y, boolean isEnemyExisted);
 
   @Override
   public String toString() {
