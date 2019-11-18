@@ -4,7 +4,7 @@ import chess.piece.*;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class Board implements SquareManageable {
+public class Board {
   public static final Pattern REGEX_PATTERN_LIST_MOVES =
       Pattern.compile("^(?<ofX>[a-h])(?<ofY>[1-8])$");
   public static final Pattern REGEX_PATTERN_MOVE =
@@ -198,28 +198,55 @@ public class Board implements SquareManageable {
     return stringRepresentation.toString();
   }
 
-  @Override
-  public Piece get(int row, int col) {
-    // TODO: get a piece(row, col)
-    return null;
-  }
+  class Square implements SquareManageable {
+    private Piece[][] metrix;
+    private Position currentPosition;
+    private Color currentTurn;
 
-  @Override
-  public Piece update(int fromRow, int fromCol, int toRow, int toCol) {
-    // TODO: move a piece from A(fromRow, fromCol) to B(fromRow, fromCol)
-    return null;
-  }
+    Square(Piece[][] metrix, Position currentPosition, Color currentTurn) {
+      this.metrix = metrix;
+      this.currentPosition = currentPosition;
+      this.currentTurn = currentTurn;
+    }
 
-  @Override
-  public Piece remove(int row, int col) {
-    // TODO: remove a piece(row, col)
-    return null;
-  }
+    @Override
+    public Piece get(int x, int y) throws IndexOutOfBoundsException {
+      int[] directions = convertDirection(x, y, currentTurn);
+      int destX = currentPosition.getRow() + directions[0];
+      int destY = currentPosition.getCol() + directions[1];
 
-  @Override
-  public Piece[] getAttackablePieces(int row, int col) {
-    // TODO: get a list of attackable Pieces
-    return new Piece[0];
+      return metrix[destY][destX];
+    }
+
+    @Override
+    public Piece update(Piece piece, int toX, int toY) throws IndexOutOfBoundsException {
+      int[] directions = convertDirection(toX, toY, currentTurn);
+      int destX = currentPosition.getRow() + directions[0];
+      int destY = currentPosition.getCol() + directions[1];
+
+      Piece removed = metrix[destY][destX];
+      metrix[destY][destX] = piece;
+      return removed;
+    }
+
+    @Override
+    public Piece move(int fromX, int fromY, int toX, int toY) throws IndexOutOfBoundsException {
+      Piece removed = get(toX, toY);
+      update(get(fromX, fromY), toX, toY);
+      update(null, fromX, fromY);
+      return removed;
+    }
+
+    @Override
+    public Piece remove(int x, int y) throws IndexOutOfBoundsException {
+      return update(null, x, y);
+    }
+
+    @Override
+    public Piece[] getAttackablePieces(int x, int y) throws IndexOutOfBoundsException {
+      // TODO: get a list of attackable Pieces
+      return new Piece[] {};
+    }
   }
 
   static class BoardInitializer {
