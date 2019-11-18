@@ -65,7 +65,6 @@ public class Board implements SquareManageable {
 
     // if less than two spaces between the piece and destination
     if (Math.max(x_abs, y_abs) < 2) return true;
-
     if ((x_abs == y_abs) || (x_abs == 0) || (y_abs == 0)) {
 
       int startRow;
