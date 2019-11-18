@@ -1,6 +1,7 @@
 package chess;
 
 import chess.piece.*;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class Board implements SquareManageable {
@@ -53,17 +54,6 @@ public class Board implements SquareManageable {
     return (Integer.valueOf(y) - 8) * -1;
   }
 
-  public boolean update(Position pos, Position newPos, int turn) {
-    Piece p = getPiece(pos);
-    setPiece(pos, null);
-    setPiece(newPos, p);
-    p.setLastMovedTurn(turn);
-    // TODO: implement update method to BoardString
-    stringRepresentation = new BoardString(metrix);
-    // TODO: only when board successfully updated, return true
-    return true;
-  }
-
   private Piece getPiece(Position pos) {
     return metrix[pos.getCol()][pos.getRow()];
   }
@@ -72,23 +62,69 @@ public class Board implements SquareManageable {
     metrix[pos.getCol()][pos.getRow()] = piece;
   }
 
-  public boolean isOwnPiece(Position pos, Color c) {
-    Piece p = getPiece(pos);
-    if (p == null) {
-      return false;
+  public Piece update(
+      Position from, Position to, Map<String, String> options, Color turn, int turnCount)
+      throws InvalidMoveException {
+    Piece target = getPiece(from);
+
+    // Check from Position
+    if (target == null || target.getColor() != turn) {
+      throw new InvalidMoveException("Can not find your own piece you want to move.");
     }
-    return p.getColor() == c;
+
+    // calculate move from the piece perspective
+    int x = to.getRow() - from.getRow();
+    int y = to.getCol() - from.getCol();
+    if (turn == turns[0]) {
+      y *= -1;
+    } else if (turn == turns[0]) {
+      x *= -1;
+    }
+
+    /*
+     * TODO: Check if special move is available
+     */
+
+    /*
+     * check if it's normal move
+     */
+    // Check to Position
+    Piece dest = getPiece(to);
+    boolean isEnemyPieceOnDist = false;
+    if (dest != null) {
+      if (dest.getColor() == turn) {
+        throw new InvalidMoveException(
+            "Your piece already exists on the destination your piece try to move.");
+      } else {
+        isEnemyPieceOnDist = true;
+      }
+    }
+
+    // Check Halfway
+    if (!isNotPiecesOnHalfway(from, to)) {
+      throw new InvalidMoveException(
+          "Can not move the selected piece because other piece is on halfway.");
+    }
+
+    // Check Basic move of a Piece
+    if (!target.isValidMove(x, y, isEnemyPieceOnDist)) {
+      throw new InvalidMoveException(
+          "The piece you selected doesn't allow to move to the destination");
+    }
+
+    setPiece(from, null);
+    setPiece(to, target);
+    target.setLastMovedTurn(turnCount);
+
+    // TODO: recalculate all possible moves
+
+    // TODO: implement update method to BoardString
+    stringRepresentation = new BoardString(metrix);
+
+    return dest;
   }
 
-  public boolean isEnemyPiece(Position pos, Color c) {
-    Piece p = getPiece(pos);
-    if (p == null) {
-      return false;
-    }
-    return p.getColor() != c;
-  }
-
-  public boolean isNotPiecesOnHalfway(Position from, Position to) {
+  private boolean isNotPiecesOnHalfway(Position from, Position to) {
     int x = from.getRow() - to.getRow();
     int y = from.getCol() - to.getCol();
     int x_abs = Math.abs(x);
@@ -129,13 +165,6 @@ public class Board implements SquareManageable {
     }
 
     return true;
-  }
-
-  public boolean ableBasicMove(Position from, Position to, Color c) {
-    int x = from.getRow() - to.getRow();
-    int y = from.getCol() - to.getCol();
-    Piece p = getPiece(from);
-    return p.isValidMove(x, y, isEnemyPiece(to, c));
   }
 
   @Override

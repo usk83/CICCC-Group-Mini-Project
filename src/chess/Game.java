@@ -62,36 +62,19 @@ public class Game {
           input.params.remove("toX");
           input.params.remove("toY");
 
-          // Check from Position
-          if (!board.isOwnPiece(from, TURNS[turnIndex])) {
-            System.out.println("Can not find your own piece you want to move.");
-            break;
+          try {
+            board.update(from, to, input.params, TURNS[turnIndex], turnCount);
+            System.out.println("OK");
+            System.out.printf("\n%s", board);
+
+            // TODO: Check and Checkmate handling
+            // if (checkmate) {}
+
+            switchTurn();
+          } catch (InvalidMoveException e) {
+            System.err.println(e.getMessage());
           }
 
-          // Check to Position
-          if (board.isOwnPiece(to, TURNS[turnIndex])) {
-            System.out.println(
-                "Your piece already exists on the destination your piece try to move.");
-            break;
-          }
-
-          // Check Halfway
-          if (!board.isNotPiecesOnHalfway(from, to)) {
-            System.out.println(
-                "Can not move the selected piece because other piece is on halfway.");
-            break;
-          }
-
-          // Check Basic move of a Piece
-          if (!board.ableBasicMove(from, to, TURNS[turnIndex])) {
-            System.out.println("The piece you selected doesn't allow to move to the destination");
-            break;
-          }
-
-          board.update(from, to, turnCount);
-          System.out.println("OK");
-          System.out.printf("\n%s", board);
-          switchTurn();
           break;
         case INVALID:
           System.out.println("Invalid input, please try again");
