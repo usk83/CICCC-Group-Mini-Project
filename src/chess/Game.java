@@ -3,7 +3,7 @@ package chess;
 import chess.piece.*;
 
 public class Game {
-  private static final Color[] TUNES = {Color.WHITE, Color.BLACK};
+  private static final Color[] TURNS = {Color.WHITE, Color.BLACK};
 
   private int turnIndex;
   private int turnCount;
@@ -12,7 +12,7 @@ public class Game {
   public Game() {
     turnIndex = 0;
     turnCount = 1;
-    board = new Board(TUNES);
+    board = new Board(TURNS);
   }
 
   public void play() {
@@ -21,7 +21,7 @@ public class Game {
 
     boolean isGameOnGoing = true;
     while (isGameOnGoing) {
-      System.out.printf("\n%s to move\n", TUNES[turnIndex]);
+      System.out.printf("\n%s to move\n", TURNS[turnIndex]);
       InputController.Input input = InputController.getInput("Enter UCI (type 'help' for help): ");
       switch (input.command) {
         case HELP:
@@ -38,14 +38,14 @@ public class Game {
           System.out.printf("\n%s", board);
           break;
         case RESIGN:
-          String[] score = new String[TUNES.length];
-          for (int i = 0; i < TUNES.length; i++) {
+          String[] score = new String[TURNS.length];
+          for (int i = 0; i < TURNS.length; i++) {
             score[i] = i == getNextTurnIndex() ? "1" : "0";
           }
           System.out.printf("\n%s\n", board);
           System.out.printf(
               "Game over - %s - %s won by resignation\n",
-              String.join("-", score), TUNES[getNextTurnIndex()]);
+              String.join("-", score), TURNS[getNextTurnIndex()]);
           isGameOnGoing = false;
           break;
         case ALL_POSSIBLE_MOVES:
@@ -73,13 +73,13 @@ public class Game {
           Position toPosition = new Position(moveTo[2], moveTo[3]);
 
           // Check FromPosition
-          if (!board.isOwnPiece(fromPosition, TUNES[turnIndex])) {
+          if (!board.isOwnPiece(fromPosition, TURNS[turnIndex])) {
             System.out.println("Can not find your own piece you want to move.");
             break;
           }
 
           // Check ToPosition
-          if (board.isOwnPiece(toPosition, TUNES[turnIndex])) {
+          if (board.isOwnPiece(toPosition, TURNS[turnIndex])) {
             System.out.println(
                 "Your piece already exists on the destination your piece try to move.");
             break;
@@ -93,7 +93,7 @@ public class Game {
           }
 
           // Check Basic move of a Piece
-          if (!board.ableBasicMove(fromPosition, toPosition, TUNES[turnIndex])) {
+          if (!board.ableBasicMove(fromPosition, toPosition, TURNS[turnIndex])) {
             System.out.println("The piece you selected doesn't allow to move to the destination");
             break;
           }
@@ -120,7 +120,7 @@ public class Game {
   }
 
   private int getNextTurnIndex() {
-    return (turnIndex + 1) % TUNES.length;
+    return (turnIndex + 1) % TURNS.length;
   }
 
   private void switchTurn() {
