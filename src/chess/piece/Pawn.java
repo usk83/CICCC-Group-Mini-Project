@@ -41,7 +41,7 @@ public class Pawn extends Piece {
 
   @Override
   public void recordMoved(int x, int y, int turn) {
-    this.recordMoved(x, y, turn);
+    super.recordMoved(x, y, turn);
     if (y == 2) {
       didTwoStepMove = turn;
     }
