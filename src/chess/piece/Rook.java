@@ -16,6 +16,10 @@ public class Rook extends Piece {
     super(color, symbols);
   }
 
+  Rook(Color color, int lastMovedTurn) {
+    super(color, symbols, lastMovedTurn);
+  }
+
   @Override
   public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
     return x == 0 || y == 0;

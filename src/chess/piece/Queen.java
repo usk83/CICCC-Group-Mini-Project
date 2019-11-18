@@ -16,6 +16,10 @@ public class Queen extends Piece {
     super(color, symbols);
   }
 
+  Queen(Color color, int lastMovedTurn) {
+    super(color, symbols, lastMovedTurn);
+  }
+
   @Override
   public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
     return x == 0 || y == 0 || Math.abs(x) == Math.abs(y);

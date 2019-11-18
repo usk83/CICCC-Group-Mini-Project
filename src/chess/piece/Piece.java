@@ -9,10 +9,19 @@ public abstract class Piece {
   protected int lastMovedTurn;
 
   public Piece(Color color, Map<Color, Character> symbols) {
-    this(color, symbols, false);
+    this(color, symbols, false, 0);
   }
 
-  public Piece(Color color, Map<Color, Character> symbols, boolean isEssential) {
+  protected Piece(Color color, Map<Color, Character> symbols, int lastMovedTurn) {
+    this(color, symbols, false, lastMovedTurn);
+  }
+
+  protected Piece(Color color, Map<Color, Character> symbols, boolean isEssential) {
+    this(color, symbols, isEssential, 0);
+  }
+
+  protected Piece(
+      Color color, Map<Color, Character> symbols, boolean isEssential, int lastMovedTurn) {
     if (color == null) {
       throw new IllegalArgumentException("`color` must be specified.");
     }
@@ -24,7 +33,7 @@ public abstract class Piece {
     this.color = color;
     symbol = s;
     this.isEssential = isEssential;
-    lastMovedTurn = 0;
+    this.lastMovedTurn = lastMovedTurn;
   }
 
   public abstract boolean isValidMove(int x, int y, boolean isEnemyExisted);
