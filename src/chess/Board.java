@@ -27,7 +27,7 @@ public class Board implements SquareManageable {
   }
 
   public boolean update(Position pos, Position newPos) {
-    Piece p = metrix[pos.getCol()][pos.getRow()];
+    Piece p = getPiece(pos);
     metrix[pos.getCol()][pos.getRow()] = null;
     metrix[newPos.getCol()][newPos.getRow()] = p;
     stringRepresentation = new BoardString(metrix);
@@ -53,8 +53,8 @@ public class Board implements SquareManageable {
       return false;
     }
 
-    Piece that = metrix[pos.getCol()][pos.getRow()];
-    return that.getColor() != c;
+    Piece p = getPiece(pos);
+    return p.getColor() != c;
   }
 
   public boolean isNotPiecesOnHalfway(Position from, Position to) {
@@ -105,7 +105,7 @@ public class Board implements SquareManageable {
   public boolean ableBasicMove(Position from, Position to, Color c) {
     int x = from.getRow() - to.getRow();
     int y = from.getCol() - to.getCol();
-    Piece p = metrix[from.getCol()][from.getRow()];
+    Piece p = getPiece(from);
     return p.isValidMove(x, y, isEnemyPiece(to, c));
   }
 
