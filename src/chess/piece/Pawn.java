@@ -73,6 +73,7 @@ public class Pawn extends Piece {
     }
     Piece promoted = promote(promotion, turn, turnCount);
     Piece removed = square.move(0, 0, xDiff, yDiff);
+    promoted.lastMovedTurn = turnCount;
     square.update(promoted, xDiff, yDiff);
     return removed;
   }
