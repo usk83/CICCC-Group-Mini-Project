@@ -302,16 +302,7 @@ public class Board implements SquareManageable {
 
     public BoardString(Piece[][] metrix) {
       this();
-      if (metrix != null) {
-        if (metrix.length != 8 || metrix[0].length != 8) {
-          throw new IllegalArgumentException("Only 8x8 metrix is supported currently.");
-        }
-        for (int y = 0; y < 8; y++) {
-          for (int x = 0; x < 8; x++) {
-            update(metrix[y][x], x, y);
-          }
-        }
-      }
+      recalculate(metrix);
     }
 
     private void initialize() {
@@ -320,6 +311,20 @@ public class Board implements SquareManageable {
 
     public void clear() {
       initialize();
+    }
+
+    public void recalculate(Piece[][] metrix) {
+      if (metrix == null) {
+        return;
+      }
+      if (metrix.length != 8 || metrix[0].length != 8) {
+        throw new IllegalArgumentException("Only 8x8 metrix is supported currently.");
+      }
+      for (int y = 0; y < 8; y++) {
+        for (int x = 0; x < 8; x++) {
+          update(metrix[y][x], x, y);
+        }
+      }
     }
 
     public void update(Piece p, int x, int y) {
