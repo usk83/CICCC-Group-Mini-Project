@@ -27,9 +27,9 @@ public class Game {
         case HELP:
           System.out.println(
               ""
-                  + "* type 'help' for help \n "
-                  + "* type 'board' to see the board again \n "
-                  + "* type 'resign' to resign \n "
+                  + "* type 'help' for help \n"
+                  + "* type 'board' to see the board again \n"
+                  + "* type 'resign' to resign \n"
                   + "* type a UCI (e.g. b1c3, e7e8q) to make a move");
           break;
         case BOARD:
