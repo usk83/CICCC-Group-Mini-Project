@@ -76,7 +76,7 @@ public class Board implements SquareManageable {
 
     // check if there is turn's piece at `from` position
     if (targetPiece == null || targetPiece.getColor() != turn) {
-      throw new InvalidMoveException("Can not find your own piece you want to move.");
+      throw new InvalidMoveException("Can not find your own piece to move.");
     }
 
     // calculate move from the piece perspective
@@ -101,8 +101,7 @@ public class Board implements SquareManageable {
     boolean isEnemyPieceOnDest = false;
     if (destPiece != null) {
       if (destPiece.getColor() == turn) {
-        throw new InvalidMoveException(
-            "Your piece already exists on the destination your piece try to move.");
+        throw new InvalidMoveException("Your other piece is at the destination.");
       } else {
         isEnemyPieceOnDest = true;
       }
@@ -110,23 +109,19 @@ public class Board implements SquareManageable {
 
     // move is invalid if there is a piece between `from` and `to`
     if (isPieceExistedBetween(from, to)) {
-      throw new InvalidMoveException(
-          "Can not move the selected piece because other piece is on halfway.");
+      throw new InvalidMoveException("Can not jump over other pieces.");
     }
 
     // check if move is valid from the piece's perspective
     if (!targetPiece.isValidMove(x, y, isEnemyPieceOnDest)) {
-      throw new InvalidMoveException(
-          "The piece you selected doesn't allow to move to the destination");
+      throw new InvalidMoveException("Not a valid move for the piece.");
     }
 
-    movePiece(targetPiece, from, to);
     targetPiece.setLastMovedTurn(turnCount);
+    movePiece(targetPiece, from, to);
+    stringRepresentation.update(targetPiece, from, to);
 
     // TODO: recalculate all possible moves
-
-    // TODO: implement update method to BoardString
-    stringRepresentation = new BoardString(metrix);
 
     return destPiece;
   }
@@ -165,7 +160,7 @@ public class Board implements SquareManageable {
 
     baseX += unitX;
     baseY += unitY;
-    while (baseX != destX && baseY != destY) {
+    while (baseX != destX || baseY != destY) {
       // return false if any piece in on the position bettween `from` and `to`
       if (getPiece(new Position(baseX, baseY)) != null) return true;
       baseX += unitX;
@@ -206,6 +201,9 @@ public class Board implements SquareManageable {
 
   static class BoardInitializer {
     public static final Piece[][] initializeBoard(Color[] turns) {
+      if (turns.length != 2) {
+        throw new IllegalArgumentException("Only 2 players(turns) game is supported currently.");
+      }
       Piece[][] initialBoard = new Piece[8][8];
       initialBoard[7] = initializeKingsLine(turns[0]);
       initialBoard[6] = initializePawnsLine(turns[0]);
@@ -288,6 +286,9 @@ public class Board implements SquareManageable {
     public BoardString(Piece[][] metrix) {
       this();
       if (metrix != null) {
+        if (metrix.length != 8 || metrix[0].length != 8) {
+          throw new IllegalArgumentException("Only 8x8 metrix is supported currently.");
+        }
         for (int y = 0; y < 8; y++) {
           for (int x = 0; x < 8; x++) {
             update(metrix[y][x], x, y);
@@ -311,6 +312,15 @@ public class Board implements SquareManageable {
       } else {
         body.replace(position, position + 1, String.valueOf(p));
       }
+    }
+
+    public void update(Piece p, Position pos) {
+      update(p, pos.getRow(), pos.getCol());
+    }
+
+    public void update(Piece p, Position from, Position to) {
+      update(null, from.getRow(), from.getCol());
+      update(p, to.getRow(), to.getCol());
     }
 
     @Override
