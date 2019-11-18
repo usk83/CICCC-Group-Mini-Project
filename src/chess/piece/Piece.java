@@ -3,8 +3,8 @@ package chess.piece;
 import java.util.Map;
 
 public abstract class Piece {
-  protected Color color;
-  protected char symbol;
+  private Color color;
+  private char symbol;
   protected int lastMovedTurn;
 
   public Piece(Color color, Map<Color, Character> symbols) {
