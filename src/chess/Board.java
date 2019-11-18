@@ -165,7 +165,7 @@ public class Board implements SquareManageable {
 
     baseX += unitX;
     baseY += unitY;
-    while (baseX != destX && baseY != destY) {
+    while (baseX != destX || baseY != destY) {
       // return false if any piece in on the position bettween `from` and `to`
       if (getPiece(new Position(baseX, baseY)) != null) return true;
       baseX += unitX;
