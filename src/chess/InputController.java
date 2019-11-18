@@ -26,10 +26,6 @@ public class InputController {
       Pattern pattern = null;
       String[] names = null;
       switch (command) {
-        case SQUARE_POSSIBLE_MOVES:
-          pattern = Board.REGEX_PATTERN_LIST_MOVES;
-          names = Board.REGEX_PATTERN_LIST_MOVES_GROUP_NAMES;
-          break;
         case GO_MOVE:
           pattern = Board.REGEX_PATTERN_MOVE;
           names = Board.REGEX_PATTERN_MOVE_GROUP_NAMES;
