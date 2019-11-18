@@ -16,6 +16,10 @@ public class Bishop extends Piece {
     super(color, symbols);
   }
 
+  Bishop(Color color, int lastMovedTurn) {
+    super(color, symbols, lastMovedTurn);
+  }
+
   @Override
   public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
     return Math.abs(x) == Math.abs(y);

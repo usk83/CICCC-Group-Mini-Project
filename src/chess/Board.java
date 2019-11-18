@@ -4,7 +4,7 @@ import chess.piece.*;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class Board implements SquareManageable {
+public class Board {
   public static final Pattern REGEX_PATTERN_LIST_MOVES =
       Pattern.compile("^(?<ofX>[a-h])(?<ofY>[1-8])$");
   public static final Pattern REGEX_PATTERN_MOVE =
@@ -54,6 +54,15 @@ public class Board implements SquareManageable {
     return (Integer.valueOf(y) - 8) * -1;
   }
 
+  private final int[] convertDirection(int x, int y, Color turn) {
+    if (turn == turns[0]) {
+      y *= -1;
+    } else if (turn == turns[0]) {
+      x *= -1;
+    }
+    return new int[] {x, y};
+  }
+
   private Piece getPiece(Position pos) {
     return metrix[pos.getCol()][pos.getRow()];
   }
@@ -71,7 +80,7 @@ public class Board implements SquareManageable {
 
   public Piece update(
       Position from, Position to, Map<String, String> options, Color turn, int turnCount)
-      throws InvalidMoveException {
+      throws InvalidMoveException, InvalidParameterException {
     final Piece targetPiece = getPiece(from);
 
     // check if there is turn's piece at `from` position
@@ -80,17 +89,26 @@ public class Board implements SquareManageable {
     }
 
     // calculate move from the piece perspective
-    int x = to.getRow() - from.getRow();
-    int y = to.getCol() - from.getCol();
-    if (turn == turns[0]) {
-      y *= -1;
-    } else if (turn == turns[0]) {
-      x *= -1;
-    }
+    int[] directions =
+        convertDirection(to.getRow() - from.getRow(), to.getCol() - from.getCol(), turn);
+    int x = directions[0];
+    int y = directions[1];
 
     /*
-     * TODO: check if special move is available
+     * try special move
      */
+    try {
+      Piece destPiece =
+          targetPiece.moveSpecially(new Square(metrix, from, turn), x, y, options, turn, turnCount);
+      stringRepresentation.recalculate(metrix);
+
+      // TODO: recalculate all possible moves
+
+      return destPiece;
+    } catch (InvalidOptionsException | NotEnoughOptionsException e) {
+      throw new InvalidParameterException(e.getMessage());
+    } catch (InvalidSpecialMoveException e) {
+    }
 
     /*
      * try normal move
@@ -122,9 +140,13 @@ public class Board implements SquareManageable {
       throw new InvalidMoveException("Your other piece is at the destination.");
     }
 
-    targetPiece.setLastMovedTurn(turnCount);
+    for (String option : options.values()) {
+      if (option != null) throw InvalidParameterException.newException(options);
+    }
+
     movePiece(targetPiece, from, to);
     stringRepresentation.update(targetPiece, from, to);
+    targetPiece.recordMoved(x, y, turnCount);
 
     // TODO: recalculate all possible moves
 
@@ -192,28 +214,55 @@ public class Board implements SquareManageable {
     return stringRepresentation.toString();
   }
 
-  @Override
-  public Piece get(int row, int col) {
-    // TODO: get a piece(row, col)
-    return null;
-  }
+  class Square implements SquareManageable {
+    private Piece[][] metrix;
+    private Position currentPosition;
+    private Color currentTurn;
 
-  @Override
-  public Piece update(int fromRow, int fromCol, int toRow, int toCol) {
-    // TODO: move a piece from A(fromRow, fromCol) to B(fromRow, fromCol)
-    return null;
-  }
+    Square(Piece[][] metrix, Position currentPosition, Color currentTurn) {
+      this.metrix = metrix;
+      this.currentPosition = currentPosition;
+      this.currentTurn = currentTurn;
+    }
 
-  @Override
-  public Piece remove(int row, int col) {
-    // TODO: remove a piece(row, col)
-    return null;
-  }
+    @Override
+    public Piece get(int x, int y) throws IndexOutOfBoundsException {
+      int[] directions = convertDirection(x, y, currentTurn);
+      int destX = currentPosition.getRow() + directions[0];
+      int destY = currentPosition.getCol() + directions[1];
 
-  @Override
-  public Piece[] getAttackablePieces(int row, int col) {
-    // TODO: get a list of attackable Pieces
-    return new Piece[0];
+      return metrix[destY][destX];
+    }
+
+    @Override
+    public Piece update(Piece piece, int toX, int toY) throws IndexOutOfBoundsException {
+      int[] directions = convertDirection(toX, toY, currentTurn);
+      int destX = currentPosition.getRow() + directions[0];
+      int destY = currentPosition.getCol() + directions[1];
+
+      Piece removed = metrix[destY][destX];
+      metrix[destY][destX] = piece;
+      return removed;
+    }
+
+    @Override
+    public Piece move(int fromX, int fromY, int toX, int toY) throws IndexOutOfBoundsException {
+      Piece removed = get(toX, toY);
+      update(get(fromX, fromY), toX, toY);
+      update(null, fromX, fromY);
+      return removed;
+    }
+
+    @Override
+    public Piece remove(int x, int y) throws IndexOutOfBoundsException {
+      return update(null, x, y);
+    }
+
+    @Override
+    public Piece[] getAttackablePieces(int x, int y) throws IndexOutOfBoundsException {
+      // TODO: get a list of attackable Pieces
+      return new Piece[] {};
+    }
   }
 
   static class BoardInitializer {
@@ -302,16 +351,7 @@ public class Board implements SquareManageable {
 
     public BoardString(Piece[][] metrix) {
       this();
-      if (metrix != null) {
-        if (metrix.length != 8 || metrix[0].length != 8) {
-          throw new IllegalArgumentException("Only 8x8 metrix is supported currently.");
-        }
-        for (int y = 0; y < 8; y++) {
-          for (int x = 0; x < 8; x++) {
-            update(metrix[y][x], x, y);
-          }
-        }
-      }
+      recalculate(metrix);
     }
 
     private void initialize() {
@@ -320,6 +360,20 @@ public class Board implements SquareManageable {
 
     public void clear() {
       initialize();
+    }
+
+    public void recalculate(Piece[][] metrix) {
+      if (metrix == null) {
+        return;
+      }
+      if (metrix.length != 8 || metrix[0].length != 8) {
+        throw new IllegalArgumentException("Only 8x8 metrix is supported currently.");
+      }
+      for (int y = 0; y < 8; y++) {
+        for (int x = 0; x < 8; x++) {
+          update(metrix[y][x], x, y);
+        }
+      }
     }
 
     public void update(Piece p, int x, int y) {

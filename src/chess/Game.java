@@ -66,7 +66,7 @@ public class Game {
               System.out.printf("\n%s", board);
               switchTurn();
             }
-          } catch (InvalidMoveException e) {
+          } catch (InvalidMoveException | InvalidParameterException e) {
             System.err.println(e.getMessage());
           }
 

@@ -16,6 +16,10 @@ public class Knight extends Piece {
     super(color, symbols);
   }
 
+  Knight(Color color, int lastMovedTurn) {
+    super(color, symbols, lastMovedTurn);
+  }
+
   @Override
   public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
     int xDiff = Math.abs(x);

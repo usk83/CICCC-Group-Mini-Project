@@ -1,11 +1,13 @@
 package chess.piece;
 
 public interface SquareManageable {
-  public Piece get(int row, int col);
+  public Piece get(int x, int y) throws IndexOutOfBoundsException;
 
-  public Piece update(int fromRow, int fromCol, int toRow, int toCol);
+  public Piece update(Piece piece, int toX, int toY) throws IndexOutOfBoundsException;
 
-  public Piece remove(int row, int col);
+  public Piece move(int fromX, int fromY, int toX, int toY) throws IndexOutOfBoundsException;
 
-  public Piece[] getAttackablePieces(int row, int col);
+  public Piece remove(int x, int y) throws IndexOutOfBoundsException;
+
+  public Piece[] getAttackablePieces(int x, int y) throws IndexOutOfBoundsException;
 }
