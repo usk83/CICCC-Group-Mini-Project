@@ -120,13 +120,15 @@ public class Board implements SquareManageable {
   }
 
   @Override
-  public void update(int fromRow, int fromCol, int toRow, int toCol) {
+  public boolean update(int fromRow, int fromCol, int toRow, int toCol) {
     // TODO: move a piece from A(fromRow, fromCol) to B(fromRow, fromCol)
+    return false;
   }
 
   @Override
-  public void remove(int row, int col) {
+  public boolean remove(int row, int col) {
     // TODO: remove a piece(row, col)
+    return false;
   }
 
   @Override
