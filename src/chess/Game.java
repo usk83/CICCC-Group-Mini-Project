@@ -22,8 +22,8 @@ public class Game {
     boolean isGameOnGoing = true;
     while (isGameOnGoing) {
       System.out.printf("\n%s to move\n", TUNES[turnIndex]);
-      String userInput = InputController.getUserInput("Enter UCI (type 'help' for help): ");
-      switch (Command.parse(userInput)) {
+      InputController.Input input = InputController.getInput("Enter UCI (type 'help' for help): ");
+      switch (input.command) {
         case HELP:
           System.out.println(
               ""
@@ -55,11 +55,16 @@ public class Game {
           System.err.println("This command haven't yet implemented.");
           break;
         case GO_MOVE:
+          /*
+           * TODO: Move this calculation to Board.update
+           * TODO: Use input's params field
+           * TODO: Only 'from' and 'to' params should be calculated
+           */
           int[] moveTo = new int[4];
           char promotionPiece;
           int index = 0;
-          for (int i = 0; i < userInput.length(); i++) {
-            char c = userInput.charAt(i);
+          for (int i = 0; i < input.line.length(); i++) {
+            char c = input.line.charAt(i);
             moveTo[index] = Character.isDigit(c) ? convertBoardNumber(c) : convertLetterToNumber(c);
             index++;
           }
