@@ -38,6 +38,17 @@ public abstract class Piece {
 
   public abstract boolean isValidMove(int x, int y, boolean isEnemyExisted);
 
+  public Piece moveSpecially(
+      SquareManageable square,
+      int xDiff,
+      int yDiff,
+      Map<String, String> options,
+      Color turn,
+      int turnCount)
+      throws InvalidOptionsException, InvalidSpecialMoveException, NotEnoughOptionsException {
+    throw new InvalidSpecialMoveException();
+  }
+
   public void recordMoved(int x, int y, int turn) {
     this.lastMovedTurn = turn;
   }

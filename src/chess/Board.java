@@ -95,8 +95,20 @@ public class Board {
     int y = directions[1];
 
     /*
-     * TODO: check if special move is available
+     * try special move
      */
+    try {
+      Piece destPiece =
+          targetPiece.moveSpecially(new Square(metrix, from, turn), x, y, options, turn, turnCount);
+      stringRepresentation.recalculate(metrix);
+
+      // TODO: recalculate all possible moves
+
+      return destPiece;
+    } catch (InvalidOptionsException | NotEnoughOptionsException e) {
+      throw new InvalidParameterException(e.getMessage());
+    } catch (InvalidSpecialMoveException e) {
+    }
 
     /*
      * try normal move
@@ -126,6 +138,10 @@ public class Board {
     // if there is turn's piece at the destination, invalid
     if (destError) {
       throw new InvalidMoveException("Your other piece is at the destination.");
+    }
+
+    for (String option : options.values()) {
+      if (option != null) throw InvalidParameterException.newException(options);
     }
 
     movePiece(targetPiece, from, to);

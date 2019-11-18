@@ -39,6 +39,87 @@ public class Pawn extends Piece {
     return false;
   }
 
+  public Piece tryPromotion(
+      SquareManageable square,
+      int xDiff,
+      int yDiff,
+      Map<String, String> options,
+      Color turn,
+      int turnCount)
+      throws InvalidOptionsException, InvalidSpecialMoveException, NotEnoughOptionsException {
+
+    Piece dest = square.get(xDiff, yDiff);
+    if (dest == null
+        ? !isValidMove(xDiff, yDiff, false)
+        : dest.getColor() == turn || !isValidMove(xDiff, yDiff, true)) {
+      throw new InvalidSpecialMoveException();
+    }
+
+    try {
+      square.get(xDiff, yDiff + 1);
+      throw new InvalidSpecialMoveException();
+    } catch (IndexOutOfBoundsException e) {
+    }
+
+    if (options.size() != 1) {
+      throw new NotEnoughOptionsException("Option parameter is not valid.");
+    }
+    if (!options.containsKey("promotion")) {
+      throw new InvalidOptionsException("Specify the piece to promote.");
+    }
+
+    String promotion = options.remove("promotion");
+    if (promotion == null) {
+      promotion = "";
+    }
+    Piece promoted = promote(promotion, turn, turnCount);
+    Piece removed = square.move(0, 0, xDiff, yDiff);
+    square.update(promoted, xDiff, yDiff);
+    return removed;
+  }
+
+  private Piece promote(String s, Color color, int turnCount) throws InvalidOptionsException {
+    switch (s) {
+      case "q":
+        return new Queen(color, turnCount);
+      case "b":
+        return new Bishop(color, turnCount);
+      case "k":
+        return new Knight(color, turnCount);
+      case "r":
+        return new Rook(color, turnCount);
+      default:
+        throw new InvalidOptionsException("Invalid parameter to specify the piece to promote.");
+    }
+  }
+
+  @Override
+  public Piece moveSpecially(
+      SquareManageable square,
+      int xDiff,
+      int yDiff,
+      Map<String, String> options,
+      Color turn,
+      int turnCount)
+      throws InvalidOptionsException, InvalidSpecialMoveException, NotEnoughOptionsException {
+    if (Math.abs(xDiff) >= 2 || yDiff != 1) {
+      throw new InvalidSpecialMoveException();
+    }
+
+    try {
+      return tryPromotion(square, xDiff, yDiff, options, turn, turnCount);
+    } catch (InvalidOptionsException | NotEnoughOptionsException e) {
+      throw e;
+    } catch (InvalidSpecialMoveException e) {
+    }
+
+    // En Passant
+
+    // return null;
+
+    throw new InvalidSpecialMoveException();
+  }
+
   @Override
   public void recordMoved(int x, int y, int turn) {
     super.recordMoved(x, y, turn);
