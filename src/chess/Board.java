@@ -1,14 +1,19 @@
 package chess;
 
 import chess.piece.*;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class Board implements SquareManageable {
-  public static final Pattern REGEX_PATTERN_LIST_MOVES = Pattern.compile("^(?<of>[a-h][1-8])$");
+  public static final Pattern REGEX_PATTERN_LIST_MOVES =
+      Pattern.compile("^(?<ofX>[a-h])(?<ofY>[1-8])$");
   public static final Pattern REGEX_PATTERN_MOVE =
-      Pattern.compile("^(?<from>[a-h][1-8])(?<to>[a-h][1-8])(?<promotion>[q|b|k|r])?$");
-  public static final String[] REGEX_PATTERN_LIST_MOVES_GROUP_NAMES = {"of"};
-  public static final String[] REGEX_PATTERN_MOVE_GROUP_NAMES = {"from", "to", "promotion"};
+      Pattern.compile(
+          "^(?<fromX>[a-h])(?<fromY>[1-8])(?<toX>[a-h])(?<toY>[1-8])(?<promotion>[q|b|k|r])?$");
+  public static final String[] REGEX_PATTERN_LIST_MOVES_GROUP_NAMES = {"ofX", "ofY"};
+  public static final String[] REGEX_PATTERN_MOVE_GROUP_NAMES = {
+    "fromX", "fromY", "toX", "toY", "promotion"
+  };
 
   private Color[] turns;
   private Piece[][] metrix;
@@ -33,15 +38,20 @@ public class Board implements SquareManageable {
     initialize();
   }
 
-  public boolean update(Position pos, Position newPos, int turn) {
-    Piece p = getPiece(pos);
-    setPiece(pos, null);
-    setPiece(newPos, p);
-    p.setLastMovedTurn(turn);
-    // TODO: implement update method to BoardString
-    stringRepresentation = new BoardString(metrix);
-    // TODO: only when board successfully updated, return true
-    return true;
+  public static final Position parsePosition(String x, String y) {
+    return new Position(convertX(x), convertY(y));
+  }
+
+  private static final int convertX(String x) {
+    int posX = 0;
+    for (int i = 0; i < x.length(); i++) {
+      posX += ((x.charAt(i) - 'a') + 1) * (int) Math.pow(26, x.length() - 1 - i);
+    }
+    return posX - 1;
+  }
+
+  private static final int convertY(String y) {
+    return (Integer.valueOf(y) - 8) * -1;
   }
 
   private Piece getPiece(Position pos) {
@@ -52,70 +62,111 @@ public class Board implements SquareManageable {
     metrix[pos.getCol()][pos.getRow()] = piece;
   }
 
-  public boolean isOwnPiece(Position pos, Color c) {
-    Piece p = getPiece(pos);
-    if (p == null) {
+  public Piece update(
+      Position from, Position to, Map<String, String> options, Color turn, int turnCount)
+      throws InvalidMoveException {
+    Piece targetPiece = getPiece(from);
+
+    // check if there is turn's piece at `from` position
+    if (targetPiece == null || targetPiece.getColor() != turn) {
+      throw new InvalidMoveException("Can not find your own piece you want to move.");
+    }
+
+    // calculate move from the piece perspective
+    int x = to.getRow() - from.getRow();
+    int y = to.getCol() - from.getCol();
+    if (turn == turns[0]) {
+      y *= -1;
+    } else if (turn == turns[0]) {
+      x *= -1;
+    }
+
+    /*
+     * TODO: check if special move is available
+     */
+
+    /*
+     * try normal move
+     */
+    // check the piece at `to` position
+    // if there is turn's piece, invalid
+    Piece destPiece = getPiece(to);
+    boolean isEnemyPieceOnDest = false;
+    if (destPiece != null) {
+      if (destPiece.getColor() == turn) {
+        throw new InvalidMoveException(
+            "Your piece already exists on the destination your piece try to move.");
+      } else {
+        isEnemyPieceOnDest = true;
+      }
+    }
+
+    // move is invalid if there is a piece between `from` and `to`
+    if (isPieceExistedBetween(from, to)) {
+      throw new InvalidMoveException(
+          "Can not move the selected piece because other piece is on halfway.");
+    }
+
+    // check if move is valid from the piece's perspective
+    if (!targetPiece.isValidMove(x, y, isEnemyPieceOnDest)) {
+      throw new InvalidMoveException(
+          "The piece you selected doesn't allow to move to the destination");
+    }
+
+    setPiece(from, null);
+    setPiece(to, targetPiece);
+    targetPiece.setLastMovedTurn(turnCount);
+
+    // TODO: recalculate all possible moves
+
+    // TODO: implement update method to BoardString
+    stringRepresentation = new BoardString(metrix);
+
+    return destPiece;
+  }
+
+  private static final int calcGcd(int x, int y) {
+    if (y != 0) return calcGcd(y, x % y);
+    return x;
+  }
+
+  private boolean isPieceExistedBetween(Position from, Position to) {
+    int baseX = from.getRow();
+    int baseY = from.getCol();
+    int destX = to.getRow();
+    int destY = to.getCol();
+
+    int xDiff = destX - baseX;
+    int yDiff = destY - baseY;
+    if (xDiff == 0 && yDiff == 0) {
       return false;
     }
-    return p.getColor() == c;
-  }
 
-  public boolean isEnemyPiece(Position pos, Color c) {
-    Piece p = getPiece(pos);
-    if (p == null) {
-      return false;
-    }
-    return p.getColor() != c;
-  }
-
-  public boolean isNotPiecesOnHalfway(Position from, Position to) {
-    int x = from.getRow() - to.getRow();
-    int y = from.getCol() - to.getCol();
-    int x_abs = Math.abs(x);
-    int y_abs = Math.abs(y);
-
-    // if less than two spaces between the piece and destination
-    if (Math.max(x_abs, y_abs) < 2) return true;
-    if ((x_abs == y_abs) || (x_abs == 0) || (y_abs == 0)) {
-      int startRow;
-      int endRow;
-      int startCol;
-      int endCol;
-
-      if (0 < x) {
-        startRow = to.getRow();
-        endRow = from.getRow();
-      } else {
-        startRow = from.getRow();
-        endRow = to.getRow();
-      }
-
-      if (0 < y) {
-        startCol = to.getCol();
-        endCol = from.getCol();
-      } else {
-        startCol = from.getCol();
-        endCol = to.getCol();
-      }
-
-      int countRow = 0;
-      int countCol = 0;
-      while ((startRow + countRow + 1 < endRow) || (startCol + countCol + 1 < endCol)) {
-        if (startRow + countRow < endRow) countRow++;
-        if (startCol + countCol < endCol) countCol++;
-        Position p = new Position(startRow + countRow, startCol + countCol);
-        if (this.getPiece(p) != null) return false;
-      }
+    int unitX = 0;
+    int unitY = 0;
+    if (xDiff == 0) {
+      unitY = yDiff > 0 ? 1 : -1;
+    } else if (yDiff == 0) {
+      unitX = xDiff > 0 ? 1 : -1;
+    } else {
+      // if both xDiff and yDiff is not 0, calculate the greatest common divisor,
+      // and divide each difference by that.
+      // So we can obtain each change to the position between `from` and `to`
+      int gcd = calcGcd(Math.abs(xDiff), Math.abs(yDiff));
+      unitX = xDiff / gcd;
+      unitY = yDiff / gcd;
     }
 
-    return true;
-  }
+    baseX += unitX;
+    baseY += unitY;
+    while (baseX != destX && baseY != destY) {
+      // return false if any piece in on the position bettween `from` and `to`
+      if (getPiece(new Position(baseX, baseY)) != null) return true;
+      baseX += unitX;
+      baseY += unitY;
+    }
 
-  public boolean ableBasicMove(Position from, Position to, Color c) {
-    int x = from.getRow() - to.getRow();
-    int y = from.getCol() - to.getCol();
-    Piece p = getPiece(from);
-    return p.isValidMove(x, y, isEnemyPiece(to, c));
+    return false;
   }
 
   @Override

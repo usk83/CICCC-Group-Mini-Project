@@ -18,12 +18,6 @@ public class Pawn extends Piece {
 
   @Override
   public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
-    // this piece can move forward
-    if (this.color == Color.BLACK) {
-      x = x * -1;
-      y = y * -1;
-    }
-
     // All possible move
     // x: -1 or 0 or 1
     // y: 1 or 2
