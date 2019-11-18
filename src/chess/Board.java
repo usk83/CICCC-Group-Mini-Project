@@ -31,6 +31,7 @@ public class Board implements SquareManageable {
     metrix[pos.getCol()][pos.getRow()] = null;
     metrix[newPos.getCol()][newPos.getRow()] = p;
     p.setLastMovedTurn(turn);
+    // TODO: implement update method to BoardString
     stringRepresentation = new BoardString(metrix);
     // TODO: only when board successfully updated, return true
     return true;
