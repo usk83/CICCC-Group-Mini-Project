@@ -120,13 +120,11 @@ public class Board implements SquareManageable {
           "The piece you selected doesn't allow to move to the destination");
     }
 
-    movePiece(targetPiece, from, to);
     targetPiece.setLastMovedTurn(turnCount);
+    movePiece(targetPiece, from, to);
+    stringRepresentation.update(targetPiece, from, to);
 
     // TODO: recalculate all possible moves
-
-    // TODO: implement update method to BoardString
-    stringRepresentation = new BoardString(metrix);
 
     return destPiece;
   }
@@ -311,6 +309,15 @@ public class Board implements SquareManageable {
       } else {
         body.replace(position, position + 1, String.valueOf(p));
       }
+    }
+
+    public void update(Piece p, Position pos) {
+      update(p, pos.getRow(), pos.getCol());
+    }
+
+    public void update(Piece p, Position from, Position to) {
+      update(null, from.getRow(), from.getCol());
+      update(p, to.getRow(), to.getCol());
     }
 
     @Override
