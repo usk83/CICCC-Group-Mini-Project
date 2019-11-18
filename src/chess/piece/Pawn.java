@@ -95,7 +95,7 @@ public class Pawn extends Piece {
 
   public Piece tryEnPassant(
       SquareManageable square, int xDiff, int yDiff, Color turn, int turnCount)
-      throws InvalidOptionsException, InvalidSpecialMoveException, NotEnoughOptionsException {
+      throws InvalidSpecialMoveException {
     if (Math.abs(xDiff) != 1 || yDiff != 1) {
       throw new InvalidSpecialMoveException();
     }
