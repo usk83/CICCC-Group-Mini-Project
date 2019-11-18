@@ -1,8 +1,5 @@
 package chess;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 enum Command {
   HELP,
   BOARD,
@@ -12,11 +9,8 @@ enum Command {
   GO_MOVE,
   INVALID;
 
-  private static final Pattern REGEX_PATTER_UCI =
-      Pattern.compile("([a-zA-Z]+[\\d]+)(?<secondPos>[a-zA-Z]+[\\d]+([q|Q|b|B|k|K|r|R])?)?");
-
   static Command parse(String str) {
-    switch (str.toLowerCase()) {
+    switch (str) {
       case "help":
         return HELP;
       case "board":
@@ -26,13 +20,13 @@ enum Command {
       case "moves":
         return ALL_POSSIBLE_MOVES;
       default:
-        Matcher matcher = REGEX_PATTER_UCI.matcher(str);
-        if (matcher.matches()) {
-          if (matcher.group("secondPos") == null) {
-            return SQUARE_POSSIBLE_MOVES;
-          }
+        if (Board.REGEX_PATTERN_LIST_MOVES.matcher(str).matches()) {
+          return SQUARE_POSSIBLE_MOVES;
+        }
+        if (Board.REGEX_PATTERN_MOVE.matcher(str).matches()) {
           return GO_MOVE;
         }
+        break;
     }
     return INVALID;
   }

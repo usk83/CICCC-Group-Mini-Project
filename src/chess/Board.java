@@ -1,8 +1,15 @@
 package chess;
 
 import chess.piece.*;
+import java.util.regex.Pattern;
 
 public class Board implements SquareManageable {
+  public static final Pattern REGEX_PATTERN_LIST_MOVES = Pattern.compile("^(?<of>[a-h][1-8])$");
+  public static final Pattern REGEX_PATTERN_MOVE =
+      Pattern.compile("^(?<from>[a-h][1-8])(?<to>[a-h][1-8])(?<promotion>[q|b|k|r])?$");
+  public static final String[] REGEX_PATTERN_LIST_MOVES_GROUP_NAMES = {"of"};
+  public static final String[] REGEX_PATTERN_MOVE_GROUP_NAMES = {"from", "to", "promotion"};
+
   private Color[] turns;
   private Piece[][] metrix;
   private BoardString stringRepresentation;
