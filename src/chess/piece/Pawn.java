@@ -24,19 +24,20 @@ public class Pawn extends Piece {
       y = y * -1;
     }
 
-    // x = -1, 0, 1
-    // y = 1, 2
-    if (x < -1 || 1 < x) return false;
-    if (y < 0 || 2 < y) return false;
+    // All possible move
+    // x: -1 or 0 or 1
+    // y: 1 or 2
+    if (x < -1 || 1 < x || y < 1 || 2 < y) return false;
 
-    // Diagonally forward
-    if (isEnemyExisted && y == 1 && Math.abs(x) == 1) return true;
-
-    // forward two
-    if (!isEnemyExisted && lastMovedTurn == 0 && x == 0 && y == 2) return true;
-
-    // forward one
-    if (!isEnemyExisted && x == 0 && y == 1) return true;
+    if (isEnemyExisted) {
+      // Diagonally forward
+      if (Math.abs(x) == 1 && y == 1) return true;
+    } else {
+      // forward one
+      // or
+      // forward two when first move
+      if (x == 0 && (y == 1 || (y == 2 && lastMovedTurn == 0))) return true;
+    }
 
     return false;
   }

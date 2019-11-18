@@ -18,8 +18,6 @@ public class Queen extends Piece {
 
   @Override
   public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
-    if (Math.abs(x) == Math.abs(y) || x == 0 || y == 0) return true;
-
-    return false;
+    return x == 0 || y == 0 || Math.abs(x) == Math.abs(y);
   }
 }

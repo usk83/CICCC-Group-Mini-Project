@@ -18,9 +18,8 @@ public class Knight extends Piece {
 
   @Override
   public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
-    if ((Math.abs(x) == 1) && (Math.abs(y) == 2)) return true;
-    if ((Math.abs(x) == 2) && (Math.abs(y) == 1)) return true;
-
-    return false;
+    int xDiff = Math.abs(x);
+    int yDiff = Math.abs(y);
+    return (xDiff == 1 && yDiff == 2) || (xDiff == 2 && yDiff == 1);
   }
 }
