@@ -204,6 +204,9 @@ public class Board implements SquareManageable {
 
   static class BoardInitializer {
     public static final Piece[][] initializeBoard(Color[] turns) {
+      if (turns.length != 2) {
+        throw new IllegalArgumentException("Only 2 players(turns) game is supported currently.");
+      }
       Piece[][] initialBoard = new Piece[8][8];
       initialBoard[7] = initializeKingsLine(turns[0]);
       initialBoard[6] = initializePawnsLine(turns[0]);
@@ -286,6 +289,9 @@ public class Board implements SquareManageable {
     public BoardString(Piece[][] metrix) {
       this();
       if (metrix != null) {
+        if (metrix.length != 8 || metrix[0].length != 8) {
+          throw new IllegalArgumentException("Only 8x8 metrix is supported currently.");
+        }
         for (int y = 0; y < 8; y++) {
           for (int x = 0; x < 8; x++) {
             update(metrix[y][x], x, y);
