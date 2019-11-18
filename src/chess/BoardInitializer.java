@@ -3,12 +3,12 @@ package chess;
 import chess.piece.*;
 
 class BoardInitializer {
-  public static final Piece[][] initializeBoard(Color[] tunes) {
+  public static final Piece[][] initializeBoard(Color[] turns) {
     Piece[][] initialBoard = new Piece[8][8];
-    initialBoard[7] = initializeKingsLine(tunes[0]);
-    initialBoard[6] = initializePawnsLine(tunes[0]);
-    initialBoard[0] = initializeKingsLine(tunes[1]);
-    initialBoard[1] = initializePawnsLine(tunes[1]);
+    initialBoard[7] = initializeKingsLine(turns[0]);
+    initialBoard[6] = initializePawnsLine(turns[0]);
+    initialBoard[0] = initializeKingsLine(turns[1]);
+    initialBoard[1] = initializePawnsLine(turns[1]);
     return initialBoard;
   }
 

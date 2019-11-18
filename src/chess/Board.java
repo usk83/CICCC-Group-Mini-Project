@@ -3,17 +3,17 @@ package chess;
 import chess.piece.*;
 
 public class Board implements SquareManageable {
-  private Color[] tunes;
+  private Color[] turns;
   private Piece[][] metrix;
   private BoardString stringRepresentation;
 
-  public Board(Color[] tunes) {
-    this.tunes = tunes;
+  public Board(Color[] turns) {
+    this.turns = turns;
     initialize();
   }
 
   private final void initialize() {
-    metrix = BoardInitializer.initializeBoard(tunes);
+    metrix = BoardInitializer.initializeBoard(turns);
     stringRepresentation = new BoardString(metrix);
   }
 
@@ -21,8 +21,8 @@ public class Board implements SquareManageable {
     initialize();
   }
 
-  public void clear(Color[] tunes) {
-    this.tunes = tunes;
+  public void clear(Color[] turns) {
+    this.turns = turns;
     initialize();
   }
 
