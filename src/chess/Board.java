@@ -38,7 +38,7 @@ public class Board implements SquareManageable {
   }
 
   public static final Position parsePosition(String x, String y) {
-    return new Position(convertY(y), convertX(x));
+    return new Position(convertX(x), convertY(y));
   }
 
   private static final int convertX(String x) {
