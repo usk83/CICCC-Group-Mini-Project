@@ -18,7 +18,7 @@ public abstract class Piece {
 
     this.color = color;
     symbol = s;
-    this.lastMovedTurn = 0;
+    lastMovedTurn = 0;
   }
 
   public Color getColor() {
