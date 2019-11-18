@@ -35,12 +35,12 @@ public class Board implements SquareManageable {
     return true;
   }
 
-  private boolean isPiece(Position pos) {
-    return metrix[pos.getCol()][pos.getRow()] != null;
+  private Piece getPiece(Position pos) {
+    return metrix[pos.getCol()][pos.getRow()];
   }
 
   public boolean isOwnPiece(Position pos, Color c) {
-    if (!this.isPiece(pos)) {
+    if (this.getPiece(pos) == null) {
       return false;
     }
 
@@ -49,7 +49,7 @@ public class Board implements SquareManageable {
   }
 
   public boolean isEnemyPiece(Position pos, Color c) {
-    if (!this.isPiece(pos)) {
+    if (this.getPiece(pos) == null) {
       return false;
     }
 
@@ -95,7 +95,7 @@ public class Board implements SquareManageable {
         if (startRow + countRow < endRow) countRow++;
         if (startCol + countCol < endCol) countCol++;
         Position p = new Position(startRow + countRow, startCol + countCol );
-        if (this.isPiece(p)) return false;
+        if (this.getPiece(p) != null) return false;
       }
     }
 
