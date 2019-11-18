@@ -170,6 +170,18 @@ public class Board implements SquareManageable {
     return false;
   }
 
+  public boolean isCheckmated(Color turn) {
+    // NOTE: it might be better to hold a pre-calculated list of essentials
+    for (Piece[] row : metrix) {
+      for (Piece piece : row) {
+        if (piece == null) continue;
+        if (piece.getColor() != turn) continue;
+        if (piece.isEssential()) return false;
+      }
+    }
+    return true;
+  }
+
   @Override
   public String toString() {
     return stringRepresentation.toString();
