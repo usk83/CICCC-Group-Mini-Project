@@ -102,8 +102,6 @@ public class Board {
           targetPiece.moveSpecially(new Square(metrix, from, turn), x, y, options, turn, turnCount);
       stringRepresentation.recalculate(metrix);
 
-      // TODO: recalculate all possible moves
-
       return destPiece;
     } catch (InvalidOptionsException | NotEnoughOptionsException e) {
       throw new InvalidParameterException(e.getMessage());
@@ -147,8 +145,6 @@ public class Board {
     movePiece(targetPiece, from, to);
     stringRepresentation.update(targetPiece, from, to);
     targetPiece.recordMoved(x, y, turnCount);
-
-    // TODO: recalculate all possible moves
 
     return destPiece;
   }
@@ -260,7 +256,6 @@ public class Board {
 
     @Override
     public Piece[] getAttackablePieces(int x, int y) throws IndexOutOfBoundsException {
-      // TODO: get a list of attackable Pieces
       return new Piece[] {};
     }
   }

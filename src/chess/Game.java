@@ -80,7 +80,6 @@ public class Game {
   }
 
   private final void printFinalMessage(int winnerIndex, String result) {
-    // TODO: consider draw game
     String[] score = new String[TURNS.length];
     for (int i = 0; i < TURNS.length; i++) {
       score[i] = i == winnerIndex ? "1" : "0";

@@ -22,9 +22,6 @@ public class King extends Piece {
       throw new InvalidSpecialMoveException();
     }
 
-    // TODO: chack if there is any enemy's piece which can be move to the king's destination
-    // or in the middle to the destination
-    // if so, Castling  is not available
     int direction = xDiff > 0 ? 1 : -1;
     Rook rook = null;
     int rookX = 0;
