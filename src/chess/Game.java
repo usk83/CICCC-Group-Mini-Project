@@ -75,18 +75,20 @@ public class Game {
 
           // Check ToPosition
           if (board.isOwnPiece(toPosition, TUNES[turnIndex])) {
-            System.out.println("Your piece already exists on the destination your piece try to move.");
+            System.out.println(
+                "Your piece already exists on the destination your piece try to move.");
             break;
           }
 
           // Check Halfway
           if (!board.isNotPiecesOnHalfway(fromPosition, toPosition)) {
-            System.out.println("Can not move the selected piece because other piece is on halfway.");
+            System.out.println(
+                "Can not move the selected piece because other piece is on halfway.");
             break;
           }
 
           // Check Basic move of a Piece
-          if(!board.ableBasicMove(fromPosition, toPosition, TUNES[turnIndex])) {
+          if (!board.ableBasicMove(fromPosition, toPosition, TUNES[turnIndex])) {
             System.out.println("The piece you selected doesn't allow to move to the destination");
             break;
           }

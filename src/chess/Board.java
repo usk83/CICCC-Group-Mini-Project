@@ -93,7 +93,7 @@ public class Board implements SquareManageable {
       while ((startRow + countRow + 1 < endRow) || (startCol + countCol + 1 < endCol)) {
         if (startRow + countRow < endRow) countRow++;
         if (startCol + countCol < endCol) countCol++;
-        Position p = new Position(startRow + countRow, startCol + countCol );
+        Position p = new Position(startRow + countRow, startCol + countCol);
         if (this.getPiece(p) != null) return false;
       }
     }
