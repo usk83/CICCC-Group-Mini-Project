@@ -28,8 +28,8 @@ public class Board implements SquareManageable {
 
   public boolean update(Position pos, Position newPos, int turn) {
     Piece p = getPiece(pos);
-    metrix[pos.getCol()][pos.getRow()] = null;
-    metrix[newPos.getCol()][newPos.getRow()] = p;
+    setPiece(pos, null);
+    setPiece(newPos, p);
     p.setLastMovedTurn(turn);
     // TODO: implement update method to BoardString
     stringRepresentation = new BoardString(metrix);
@@ -41,21 +41,23 @@ public class Board implements SquareManageable {
     return metrix[pos.getCol()][pos.getRow()];
   }
 
+  private void setPiece(Position pos, Piece piece) {
+    metrix[pos.getCol()][pos.getRow()] = piece;
+  }
+
   public boolean isOwnPiece(Position pos, Color c) {
-    if (this.getPiece(pos) == null) {
+    Piece p = getPiece(pos);
+    if (p == null) {
       return false;
     }
-
-    Piece that = metrix[pos.getCol()][pos.getRow()];
-    return that.getColor() == c;
+    return p.getColor() == c;
   }
 
   public boolean isEnemyPiece(Position pos, Color c) {
-    if (this.getPiece(pos) == null) {
+    Piece p = getPiece(pos);
+    if (p == null) {
       return false;
     }
-
-    Piece p = getPiece(pos);
     return p.getColor() != c;
   }
 
@@ -68,7 +70,6 @@ public class Board implements SquareManageable {
     // if less than two spaces between the piece and destination
     if (Math.max(x_abs, y_abs) < 2) return true;
     if ((x_abs == y_abs) || (x_abs == 0) || (y_abs == 0)) {
-
       int startRow;
       int endRow;
       int startCol;
