@@ -1,6 +1,6 @@
 package chess;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -17,7 +17,7 @@ public class InputController {
   static class Input {
     public String line;
     public Command command;
-    public Map<String, String> params = new HashMap<>();
+    public Map<String, String> params = new LinkedHashMap<>();
 
     Input(String line) {
       this.line = line.toLowerCase();
