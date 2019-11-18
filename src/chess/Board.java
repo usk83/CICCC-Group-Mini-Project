@@ -80,7 +80,7 @@ public class Board {
 
   public Piece update(
       Position from, Position to, Map<String, String> options, Color turn, int turnCount)
-      throws InvalidMoveException {
+      throws InvalidMoveException, InvalidParameterException {
     final Piece targetPiece = getPiece(from);
 
     // check if there is turn's piece at `from` position
