@@ -33,6 +33,7 @@ enum Command {
           }
           return GO_MOVE;
         }
+        break;
     }
     return INVALID;
   }

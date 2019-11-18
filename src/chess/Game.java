@@ -100,6 +100,7 @@ public class Game {
           break;
         case INVALID:
           System.out.println("Invalid input, please try again");
+          break;
       }
     }
   }
