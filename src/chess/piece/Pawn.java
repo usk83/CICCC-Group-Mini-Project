@@ -47,7 +47,6 @@ public class Pawn extends Piece {
       Color turn,
       int turnCount)
       throws InvalidOptionsException, InvalidSpecialMoveException, NotEnoughOptionsException {
-
     Piece dest = square.get(xDiff, yDiff);
     if (dest == null
         ? !isValidMove(xDiff, yDiff, false)
@@ -74,6 +73,7 @@ public class Pawn extends Piece {
     }
     Piece promoted = promote(promotion, turn, turnCount);
     Piece removed = square.move(0, 0, xDiff, yDiff);
+    promoted.lastMovedTurn = turnCount;
     square.update(promoted, xDiff, yDiff);
     return removed;
   }
@@ -91,6 +91,34 @@ public class Pawn extends Piece {
       default:
         throw new InvalidOptionsException("Invalid parameter to specify the piece to promote.");
     }
+  }
+
+  public Piece tryEnPassant(
+      SquareManageable square, int xDiff, int yDiff, Color turn, int turnCount)
+      throws InvalidOptionsException, InvalidSpecialMoveException, NotEnoughOptionsException {
+    if (Math.abs(xDiff) != 1 || yDiff != 1) {
+      throw new InvalidSpecialMoveException();
+    }
+
+    // In regular chess game, when En Passant is available,
+    // there is never tha enemy's piece at the destination
+    if (square.get(xDiff, yDiff) != null) {
+      throw new InvalidSpecialMoveException();
+    }
+
+    Piece next = square.get(xDiff, 0);
+    if (next == null || next.getColor() == turn || !(next instanceof Pawn)) {
+      throw new InvalidSpecialMoveException();
+    }
+
+    Pawn nextPawn = (Pawn) next;
+    if (nextPawn.didTwoStepMove != turnCount - 1) {
+      throw new InvalidSpecialMoveException();
+    }
+
+    square.move(0, 0, xDiff, yDiff);
+    lastMovedTurn = turnCount;
+    return square.remove(xDiff, 0);
   }
 
   @Override
@@ -113,11 +141,11 @@ public class Pawn extends Piece {
     } catch (InvalidSpecialMoveException e) {
     }
 
-    // En Passant
+    for (String option : options.values()) {
+      if (option != null) throw new InvalidOptionsException("");
+    }
 
-    // return null;
-
-    throw new InvalidSpecialMoveException();
+    return tryEnPassant(square, xDiff, yDiff, turn, turnCount);
   }
 
   @Override
