@@ -31,11 +31,6 @@ public abstract class Piece {
 
   public abstract boolean isValidMove(int x, int y, boolean isEnemyExisted);
 
-  public void printClassName() {
-    final String className = new Object() {}.getClass().getEnclosingClass().getName();
-    System.out.println(className);
-  }
-
   @Override
   public String toString() {
     return String.valueOf(symbol);
