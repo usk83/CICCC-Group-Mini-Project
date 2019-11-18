@@ -5,7 +5,7 @@ import java.util.Map;
 public abstract class Piece {
   protected Color color;
   protected char symbol;
-  protected Position position;
+  protected int lastMovedTurn;
 
   public Piece(Color color, Map<Color, Character> symbols) {
     if (color == null) {
@@ -18,23 +18,18 @@ public abstract class Piece {
 
     this.color = color;
     symbol = s;
+    lastMovedTurn = 0;
   }
 
-  public boolean isValidMove(Position newPosition) {
-    if (newPosition.getRow() > 0
-        && newPosition.getCol() > 0
-        && newPosition.getRow() < 8
-        && newPosition.getCol() < 8) {
-      return true;
-    } else {
-      return false;
-    }
+  public Color getColor() {
+    return color;
   }
 
-  public void printClassName() {
-    final String className = new Object() {}.getClass().getEnclosingClass().getName();
-    System.out.println(className);
+  public void setLastMovedTurn(int lastMovedTurn) {
+    this.lastMovedTurn = lastMovedTurn;
   }
+
+  public abstract boolean isValidMove(int x, int y, boolean isEnemyExisted);
 
   @Override
   public String toString() {

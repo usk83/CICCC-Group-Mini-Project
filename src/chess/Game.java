@@ -17,6 +17,7 @@ public class Game {
 
   public void play() {
     displayTitle();
+    System.out.printf("\n%s", board);
 
     boolean isGameOnGoing = true;
     while (isGameOnGoing) {
@@ -62,14 +63,40 @@ public class Game {
             moveTo[index] = Character.isDigit(c) ? convertBoardNumber(c) : convertLetterToNumber(c);
             index++;
           }
-          if (!board.update(new Position(moveTo[0], moveTo[1]), new Position(moveTo[2], moveTo[3]))) {
-            // TODO: modify this message appropriately
-            System.err.println("invalid move");
-          } else {
-            System.out.println("OK");
-            System.out.printf("\n%s", board);
-            switchTurn();
+
+          Position fromPosition = new Position(moveTo[0], moveTo[1]);
+          Position toPosition = new Position(moveTo[2], moveTo[3]);
+
+          // Check FromPosition
+          if (!board.isOwnPiece(fromPosition, TUNES[turnIndex])) {
+            System.out.println("Can not find your own piece you want to move.");
+            break;
           }
+
+          // Check ToPosition
+          if (board.isOwnPiece(toPosition, TUNES[turnIndex])) {
+            System.out.println(
+                "Your piece already exists on the destination your piece try to move.");
+            break;
+          }
+
+          // Check Halfway
+          if (!board.isNotPiecesOnHalfway(fromPosition, toPosition)) {
+            System.out.println(
+                "Can not move the selected piece because other piece is on halfway.");
+            break;
+          }
+
+          // Check Basic move of a Piece
+          if (!board.ableBasicMove(fromPosition, toPosition, TUNES[turnIndex])) {
+            System.out.println("The piece you selected doesn't allow to move to the destination");
+            break;
+          }
+
+          board.update(fromPosition, toPosition, turnCount);
+          System.out.println("OK");
+          System.out.printf("\n%s", board);
+          switchTurn();
           break;
         case INVALID:
           System.out.println("Invalid input, please try again");

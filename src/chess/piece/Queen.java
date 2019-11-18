@@ -17,11 +17,7 @@ public class Queen extends Piece {
   }
 
   @Override
-  public boolean isValidMove(Position newPosition) {
-    if (!super.isValidMove(newPosition)) {
-      return false;
-    }
-    // ToDo: implement
-    return false;
+  public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
+    return x == 0 || y == 0 || Math.abs(x) == Math.abs(y);
   }
 }

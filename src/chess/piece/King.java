@@ -17,15 +17,7 @@ public class King extends Piece {
   }
 
   @Override
-  public boolean isValidMove(Position newPosition) {
-    if (!super.isValidMove(newPosition)) {
-      return false;
-    }
-    // if difference of Col & Row is 1, it can move
-    if (Math.abs(this.position.getCol()) - (newPosition.getCol()) <= 1
-        && Math.abs(this.position.getRow()) - (newPosition.getRow()) <= 1) {
-      return true;
-    }
-    return false;
+  public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
+    return (Math.abs(x) < 2) && (Math.abs(y) < 2);
   }
 }

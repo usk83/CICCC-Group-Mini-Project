@@ -17,11 +17,28 @@ public class Pawn extends Piece {
   }
 
   @Override
-  public boolean isValidMove(Position newPosition) {
-    if (!super.isValidMove(newPosition)) {
-      return false;
+  public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
+    // this piece can move forward
+    if (this.color == Color.BLACK) {
+      x = x * -1;
+      y = y * -1;
     }
-    // ToDo: implement
-    return true;
+
+    // All possible move
+    // x: -1 or 0 or 1
+    // y: 1 or 2
+    if (x < -1 || 1 < x || y < 1 || 2 < y) return false;
+
+    if (isEnemyExisted) {
+      // Diagonally forward
+      if (Math.abs(x) == 1 && y == 1) return true;
+    } else {
+      // forward one
+      // or
+      // forward two when first move
+      if (x == 0 && (y == 1 || (y == 2 && lastMovedTurn == 0))) return true;
+    }
+
+    return false;
   }
 }

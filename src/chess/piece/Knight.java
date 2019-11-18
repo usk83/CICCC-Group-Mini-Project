@@ -17,11 +17,9 @@ public class Knight extends Piece {
   }
 
   @Override
-  public boolean isValidMove(Position newPosition) {
-    if (!super.isValidMove(newPosition)) {
-      return false;
-    }
-    // ToDo: implement
-    return false;
+  public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
+    int xDiff = Math.abs(x);
+    int yDiff = Math.abs(y);
+    return (xDiff == 1 && yDiff == 2) || (xDiff == 2 && yDiff == 1);
   }
 }

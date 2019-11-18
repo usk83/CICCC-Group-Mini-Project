@@ -17,14 +17,7 @@ public class Bishop extends Piece {
   }
 
   @Override
-  public boolean isValidMove(Position newPosition) {
-    if (!super.isValidMove(newPosition)) {
-      return false;
-    }
-    if (Math.abs(newPosition.getCol() - this.position.getCol())
-        == Math.abs(newPosition.getRow() - this.position.getRow())) {
-      return true;
-    }
-    return false;
+  public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
+    return Math.abs(x) == Math.abs(y);
   }
 }
