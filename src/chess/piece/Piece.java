@@ -29,16 +29,16 @@ public abstract class Piece {
 
   public abstract boolean isValidMove(int x, int y, boolean isEnemyExisted);
 
+  public void recordMoved(int x, int y, int turn) {
+    this.lastMovedTurn = turn;
+  }
+
   public Color getColor() {
     return color;
   }
 
   public boolean isEssential() {
     return isEssential;
-  }
-
-  public void setLastMovedTurn(int lastMovedTurn) {
-    this.lastMovedTurn = lastMovedTurn;
   }
 
   @Override

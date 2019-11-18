@@ -122,9 +122,9 @@ public class Board implements SquareManageable {
       throw new InvalidMoveException("Your other piece is at the destination.");
     }
 
-    targetPiece.setLastMovedTurn(turnCount);
     movePiece(targetPiece, from, to);
     stringRepresentation.update(targetPiece, from, to);
+    targetPiece.recordMoved(x, y, turnCount);
 
     // TODO: recalculate all possible moves
 
