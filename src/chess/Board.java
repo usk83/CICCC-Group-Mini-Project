@@ -65,10 +65,10 @@ public class Board implements SquareManageable {
   public Piece update(
       Position from, Position to, Map<String, String> options, Color turn, int turnCount)
       throws InvalidMoveException {
-    Piece target = getPiece(from);
+    Piece targetPiece = getPiece(from);
 
     // Check from Position
-    if (target == null || target.getColor() != turn) {
+    if (targetPiece == null || targetPiece.getColor() != turn) {
       throw new InvalidMoveException("Can not find your own piece you want to move.");
     }
 
@@ -89,14 +89,14 @@ public class Board implements SquareManageable {
      * check if it's normal move
      */
     // Check to Position
-    Piece dest = getPiece(to);
-    boolean isEnemyPieceOnDist = false;
-    if (dest != null) {
-      if (dest.getColor() == turn) {
+    Piece destPiece = getPiece(to);
+    boolean isEnemyPieceOnDest = false;
+    if (destPiece != null) {
+      if (destPiece.getColor() == turn) {
         throw new InvalidMoveException(
             "Your piece already exists on the destination your piece try to move.");
       } else {
-        isEnemyPieceOnDist = true;
+        isEnemyPieceOnDest = true;
       }
     }
 
@@ -107,21 +107,21 @@ public class Board implements SquareManageable {
     }
 
     // Check Basic move of a Piece
-    if (!target.isValidMove(x, y, isEnemyPieceOnDist)) {
+    if (!targetPiece.isValidMove(x, y, isEnemyPieceOnDest)) {
       throw new InvalidMoveException(
           "The piece you selected doesn't allow to move to the destination");
     }
 
     setPiece(from, null);
-    setPiece(to, target);
-    target.setLastMovedTurn(turnCount);
+    setPiece(to, targetPiece);
+    targetPiece.setLastMovedTurn(turnCount);
 
     // TODO: recalculate all possible moves
 
     // TODO: implement update method to BoardString
     stringRepresentation = new BoardString(metrix);
 
-    return dest;
+    return destPiece;
   }
 
   private static final int calcGcd(int x, int y) {
