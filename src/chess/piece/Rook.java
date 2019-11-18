@@ -18,9 +18,6 @@ public class Rook extends Piece {
 
   @Override
   public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
-    if (!super.isValidMove(x, y, isEnemyExisted)) {
-      return false;
-    }
     if (x == 0 || y == 0) return true;
     return false;
   }

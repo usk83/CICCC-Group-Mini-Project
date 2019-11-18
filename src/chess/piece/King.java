@@ -18,9 +18,6 @@ public class King extends Piece {
 
   @Override
   public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
-    if (!super.isValidMove(x, y, isEnemyExisted)) {
-      return false;
-    }
     if ((Math.abs(x) < 2) && (Math.abs(y) < 2)) return true;
     return false;
   }

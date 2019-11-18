@@ -29,9 +29,7 @@ public abstract class Piece {
     this.lastMovedTurn = lastMovedTurn;
   }
 
-  public boolean isValidMove(int x, int y, boolean isEnemyExisted) {
-    return true;
-  }
+  abstract boolean isValidMove(int x, int y, boolean isEnemyExisted);
 
   public void printClassName() {
     final String className = new Object() {}.getClass().getEnclosingClass().getName();
