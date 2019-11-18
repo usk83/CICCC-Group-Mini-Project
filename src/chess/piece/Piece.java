@@ -42,5 +42,4 @@ public abstract class Piece {
   public String toString() {
     return String.valueOf(symbol);
   }
-
 }
