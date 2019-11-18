@@ -4,8 +4,6 @@ enum Command {
   HELP,
   BOARD,
   RESIGN,
-  ALL_POSSIBLE_MOVES,
-  SQUARE_POSSIBLE_MOVES,
   GO_MOVE,
   INVALID;
 
