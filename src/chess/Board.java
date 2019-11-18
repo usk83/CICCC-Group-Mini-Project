@@ -100,8 +100,8 @@ public class Board implements SquareManageable {
       }
     }
 
-    // Check Halfway
-    if (!isNotPiecesOnHalfway(from, to)) {
+    // move is invalid if there is a piece between `from` and `to`
+    if (isPieceExistedBetween(from, to)) {
       throw new InvalidMoveException(
           "Can not move the selected piece because other piece is on halfway.");
     }
@@ -124,47 +124,48 @@ public class Board implements SquareManageable {
     return dest;
   }
 
-  private boolean isNotPiecesOnHalfway(Position from, Position to) {
-    int x = from.getRow() - to.getRow();
-    int y = from.getCol() - to.getCol();
-    int x_abs = Math.abs(x);
-    int y_abs = Math.abs(y);
+  private static final int calcGcd(int x, int y) {
+    if (y != 0) return calcGcd(y, x % y);
+    return x;
+  }
 
-    // if less than two spaces between the piece and destination
-    if (Math.max(x_abs, y_abs) < 2) return true;
-    if ((x_abs == y_abs) || (x_abs == 0) || (y_abs == 0)) {
-      int startRow;
-      int endRow;
-      int startCol;
-      int endCol;
+  private boolean isPieceExistedBetween(Position from, Position to) {
+    int baseX = from.getRow();
+    int baseY = from.getCol();
+    int destX = to.getRow();
+    int destY = to.getCol();
 
-      if (0 < x) {
-        startRow = to.getRow();
-        endRow = from.getRow();
-      } else {
-        startRow = from.getRow();
-        endRow = to.getRow();
-      }
-
-      if (0 < y) {
-        startCol = to.getCol();
-        endCol = from.getCol();
-      } else {
-        startCol = from.getCol();
-        endCol = to.getCol();
-      }
-
-      int countRow = 0;
-      int countCol = 0;
-      while ((startRow + countRow + 1 < endRow) || (startCol + countCol + 1 < endCol)) {
-        if (startRow + countRow < endRow) countRow++;
-        if (startCol + countCol < endCol) countCol++;
-        Position p = new Position(startRow + countRow, startCol + countCol);
-        if (this.getPiece(p) != null) return false;
-      }
+    int xDiff = destX - baseX;
+    int yDiff = destY - baseY;
+    if (xDiff == 0 && yDiff == 0) {
+      return false;
     }
 
-    return true;
+    int unitX = 0;
+    int unitY = 0;
+    if (xDiff == 0) {
+      unitY = yDiff > 0 ? 1 : -1;
+    } else if (yDiff == 0) {
+      unitX = xDiff > 0 ? 1 : -1;
+    } else {
+      // if both xDiff and yDiff is not 0, calculate the greatest common divisor,
+      // and divide each difference by that.
+      // So we can obtain each change to the position between `from` and `to`
+      int gcd = calcGcd(Math.abs(xDiff), Math.abs(yDiff));
+      unitX = xDiff / gcd;
+      unitY = yDiff / gcd;
+    }
+
+    baseX += unitX;
+    baseY += unitY;
+    while (baseX != destX && baseY != destY) {
+      // return false if any piece in on the position bettween `from` and `to`
+      if (getPiece(new Position(baseX, baseY)) != null) return true;
+      baseX += unitX;
+      baseY += unitY;
+    }
+
+    return false;
   }
 
   @Override
