@@ -93,7 +93,7 @@ public class Game {
             break;
           }
 
-          board.update(fromPosition, toPosition);
+          board.update(fromPosition, toPosition, turnCount);
           System.out.println("OK");
           System.out.printf("\n%s", board);
           switchTurn();

@@ -26,10 +26,11 @@ public class Board implements SquareManageable {
     initialize();
   }
 
-  public boolean update(Position pos, Position newPos) {
+  public boolean update(Position pos, Position newPos, int turn) {
     Piece p = getPiece(pos);
     metrix[pos.getCol()][pos.getRow()] = null;
     metrix[newPos.getCol()][newPos.getRow()] = p;
+    p.setLastMovedTurn(turn);
     stringRepresentation = new BoardString(metrix);
     // TODO: only when board successfully updated, return true
     return true;
