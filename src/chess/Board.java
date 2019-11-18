@@ -58,14 +58,21 @@ public class Board implements SquareManageable {
     return metrix[pos.getCol()][pos.getRow()];
   }
 
-  private void setPiece(Position pos, Piece piece) {
+  private void setPiece(Piece piece, Position pos) {
     metrix[pos.getCol()][pos.getRow()] = piece;
+  }
+
+  private Piece movePiece(Piece piece, Position from, Position to) {
+    final Piece dest = getPiece(to);
+    setPiece(piece, to);
+    setPiece(null, from);
+    return dest;
   }
 
   public Piece update(
       Position from, Position to, Map<String, String> options, Color turn, int turnCount)
       throws InvalidMoveException {
-    Piece targetPiece = getPiece(from);
+    final Piece targetPiece = getPiece(from);
 
     // check if there is turn's piece at `from` position
     if (targetPiece == null || targetPiece.getColor() != turn) {
@@ -113,8 +120,7 @@ public class Board implements SquareManageable {
           "The piece you selected doesn't allow to move to the destination");
     }
 
-    setPiece(from, null);
-    setPiece(to, targetPiece);
+    movePiece(targetPiece, from, to);
     targetPiece.setLastMovedTurn(turnCount);
 
     // TODO: recalculate all possible moves
