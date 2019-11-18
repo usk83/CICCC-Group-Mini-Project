@@ -116,21 +116,23 @@ public class Board implements SquareManageable {
 
   @Override
   public Piece get(int row, int col) {
+    // TODO: get a piece(row, col)
     return null;
   }
 
   @Override
   public void update(int fromRow, int fromCol, int toRow, int toCol) {
-
+    // TODO: move a piece from A(fromRow, fromCol) to B(fromRow, fromCol)
   }
 
   @Override
   public void remove(int row, int col) {
-
+    // TODO: remove a piece(row, col)
   }
 
   @Override
-  public Piece[] getAttackedList(int row, int col) {
+  public Piece[] getAttackablePieces(int row, int col) {
+    // TODO: get a list of attackable Pieces
     return new Piece[0];
   }
 }
