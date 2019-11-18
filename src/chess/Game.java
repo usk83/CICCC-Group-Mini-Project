@@ -74,7 +74,7 @@ public class Game {
           }
 
           // Check ToPosition
-          if (board.isPiece(toPosition) && board.isOwnPiece(toPosition, TUNES[turnIndex])) {
+          if (board.isOwnPiece(toPosition, TUNES[turnIndex])) {
             System.out.println("Your piece already exists on the destination your piece try to move.");
             break;
           }

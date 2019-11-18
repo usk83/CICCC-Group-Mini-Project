@@ -35,7 +35,7 @@ public class Board implements SquareManageable {
     return true;
   }
 
-  public boolean isPiece(Position pos) {
+  private boolean isPiece(Position pos) {
     return metrix[pos.getCol()][pos.getRow()] != null;
   }
 
